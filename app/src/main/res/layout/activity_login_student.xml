@@ -124,7 +124,7 @@
             android:visibility="invisible"
             android:ems="10"
             android:hint="Enter your class:"
-            android:inputType="phone" />
+            android:inputType="text" />
 
 
         <Spinner
