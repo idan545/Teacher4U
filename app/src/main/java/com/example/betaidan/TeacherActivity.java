@@ -152,7 +152,6 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
                     tvname.setText(name);
                     tvPhone.setText(phone);
                     tvexp.setText(Experience);
-                    tvAbout.setText(About);
 
                 }
             }

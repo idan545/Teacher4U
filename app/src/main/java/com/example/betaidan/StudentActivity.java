@@ -58,9 +58,9 @@ public class StudentActivity extends AppCompatActivity{
     //Initialize variable
     Button btLocation,DateBtn;
     TextView tv1,tv2,tv3,tv4,tv5,TVD;
-    String uid="sfns",subject="dmfdf",location="ah,d", locationn = "locationssss";
+    String uid="sfns",subject="dmfsf";
     EditText targetSubject;
-    String test="haha",eventdate;
+    String test="try",eventdate;
     Student student;
     Teacher yes;
     Boolean aBoolean=true;
