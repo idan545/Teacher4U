@@ -13,7 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mapforTeacher"></activity>
+        <activity android:name=".CreditsActivity"></activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".mapforTeacher" />
         <activity android:name=".OrderDetails" />
         <activity android:name=".TeacherActivity" />
         <activity android:name=".StudentActivity" />

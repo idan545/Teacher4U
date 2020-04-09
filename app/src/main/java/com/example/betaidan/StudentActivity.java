@@ -19,6 +19,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.ResultReceiver;
 import android.text.Html;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -237,6 +239,26 @@ public class StudentActivity extends AppCompatActivity{
         }
 
 
+    }
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main,menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        String st = item.getTitle().toString();
+        if(st.equals("Order History")) {
+            intent = new Intent(StudentActivity.this, HistoryActivity.class);
+            startActivity(intent);
+        }
+        if(st.equals("Profile")) {
+            intent = new Intent(StudentActivity.this, ProfileActivity.class);
+            startActivity(intent);
+        }
+        if(st.equals("Credits")) {
+            intent = new Intent(StudentActivity.this, CreditsActivity.class);
+            startActivity(intent);
+        }
+        return true;
     }
 
 }
