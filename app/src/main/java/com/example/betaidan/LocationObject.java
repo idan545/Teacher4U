@@ -3,12 +3,13 @@ package com.example.betaidan;
 import android.location.Location;
 
 public class LocationObject {
-    private String myLocation,Subject,uid;
+    private String myLocation,Subject,Date,uid;
 
     private  LocationObject(){}
-    public LocationObject (String myLocation,String Subject,String uid){
+    public LocationObject (String myLocation,String Subject,String Date, String uid){
         this.Subject=Subject;
         this.myLocation=myLocation;
+        this.Date=Date;
 
         //   this.uid=uid;
     }
@@ -19,6 +20,14 @@ public class LocationObject {
 
     public void setSubject(String Subject) {
         this.Subject = Subject;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String Date) {
+        this.Date = Date;
     }
 
 

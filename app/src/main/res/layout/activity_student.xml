@@ -23,6 +23,18 @@
         android:layout_height="wrap_content"
         android:text="Click to find your location" />
 
+    <Button
+        android:id="@+id/DateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick Date" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
