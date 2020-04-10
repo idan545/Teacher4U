@@ -33,18 +33,36 @@ public class Student {
     public void setUid(String uid) {
         this.uid=uid;
     }
-    public String getStudentClass(){
-        return SClass;
-    }
-    public void setStudentClass(){
-        this.SClass=SClass;
-    }
+
     public boolean getisStudent() {
         return isStudent;
     }
+
+    public String getSClass() {
+        return SClass;
+    }
+
+    public void setSClass(String SClass) {
+        this.SClass = SClass;
+    }
+
+    public boolean isStudent() {
+        return isStudent;
+    }
+
+    public void setStudent(boolean student) {
+        isStudent = student;
+    }
+
     public void setStudent(){
         this.isStudent=isStudent;
     }
+    /*public void copyStudent(Student student){
+        this.name = student.getName();
+        this.SClass = student.getStudentClass();
+        this.Phone = student.getPhone();
+        this.uid = student.getUid();
+    }*/
     /* public String getEmail() {
         return email;
     }

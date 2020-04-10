@@ -48,7 +48,7 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
     Button btn;
     TextView tvname  ,tvPhone,tvAbout,tvexp,tv5;
     String address;
-    String name,phone,Experience,About;
+    String name,phone,Experience,About,uid, sclass;
     AlertDialog.Builder adb;
     Intent t;
     LinearLayout studentdialog1;
@@ -58,6 +58,7 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
     ArrayList<String> offer=new ArrayList<>();
     ArrayList<LocationObject> locationObjects2 = new ArrayList<>();
     ArrayAdapter<String> adp;
+    LocationObject lb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +73,14 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
 
     }
     public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+        lb = locationObjects2.get(position);
+        uid = lb.getUid();
+        name = lb.getName();
+        phone = lb.getPhone();
+        sclass = lb.getSClass();
+        Toast.makeText(this, ""+name,Toast.LENGTH_LONG).show();
 
-        start();
+       // start();
     };
 
 
@@ -139,31 +146,7 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         adb.setPositiveButton("enter", (DialogInterface.OnClickListener) myclick);
         adb.setNegativeButton("cancel", (DialogInterface.OnClickListener) myclick);
         adb.show();
-        studentdetails = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    String uid = (String) data.getKey();
-                    Student c = data.getValue(Student.class);
 
-                    name = c.getName();
-                    phone = c.getPhone();
-                    Experience = c.getStudentClass();
-                    tvname.setText(name);
-                    tvPhone.setText(phone);
-                    tvexp.setText(Experience);
-
-                }
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("TeacherActivity", "Failed to read value", databaseError.toException());
-            }
-
-
-        };refstudent.addValueEventListener(studentdetails);
 
 
     }

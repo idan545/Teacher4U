@@ -19,13 +19,16 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.ResultReceiver;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,10 +63,10 @@ public class StudentActivity extends AppCompatActivity{
     //Initialize variable
     Button btLocation,DateBtn;
     TextView tv1,tv2,tv3,tv4,tv5,TVD;
-    String uid="sfns",subject="dmfsf";
+    String uid="sfns",subject="dmfsf", name, phone, sclass;
     EditText targetSubject;
     String test="try",eventdate;
-    Student student;
+    Student student = new Student();
     Teacher yes;
     Boolean aBoolean=true;
     Intent intent;
@@ -76,6 +79,36 @@ public class StudentActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
+
+        FirebaseUser firebaseUser = refAuth.getCurrentUser();
+        uid = firebaseUser.getUid();
+
+
+
+
+        ValueEventListener uploadlitner = new ValueEventListener (){
+            @Override
+            public void onDataChange(@NonNull DataSnapshot ds) {
+                for(DataSnapshot data : ds.getChildren()){
+                    String UID =  (String) data.getKey();
+                    Student student = data.getValue(Student.class);
+                    name = student.getName();
+                    phone = student.getPhone();
+                    sclass = student.getSClass();
+                }
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("mehmezh_dog", "Failed to read value", databaseError.toException());
+            }
+        };
+        refstudent.addValueEventListener(uploadlitner);
+
+
+
 
 
         //Assign variable
@@ -201,7 +234,7 @@ public class StudentActivity extends AppCompatActivity{
         subject = targetSubject.getText().toString();
         if (eventdate.isEmpty()) TVD.setError("You must pick a date");
         if (subject.isEmpty()) targetSubject.setError("You must enter your subject");
-        locationObject1 = new LocationObject(test, subject, eventdate, uid);
+        locationObject1 = new LocationObject(test, subject, eventdate, uid, name, phone, sclass);
         Toast.makeText(StudentActivity.this, locationObject1.getMyLocation(), Toast.LENGTH_SHORT).show();
         refLocations.child(subject).setValue(locationObject1);
         final ProgressDialog pd = ProgressDialog.show(this, "Search", "Searching...", true);
@@ -260,6 +293,7 @@ public class StudentActivity extends AppCompatActivity{
         }
         return true;
     }
+
 
 }
 

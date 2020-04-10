@@ -72,7 +72,7 @@ public class LoginStudent extends AppCompatActivity {
         super.onStart();
         SharedPreferences settings=getSharedPreferences("PREFS_NAME",MODE_PRIVATE);
         Boolean isChecked=settings.getBoolean("stayConnect",false);
-        Intent si = new Intent(LoginStudent.this,TeacherActivity.class);
+        Intent si = new Intent(LoginStudent.this,StudentActivity.class);
         if (refAuth.getCurrentUser()!=null && isChecked) {
             stayConnect=true;
             startActivity(si);

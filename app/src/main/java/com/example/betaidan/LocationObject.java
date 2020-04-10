@@ -3,15 +3,17 @@ package com.example.betaidan;
 import android.location.Location;
 
 public class LocationObject {
-    private String myLocation,Subject,Date,uid;
+    private String myLocation,Subject,Date,uid,name,Phone,SClass;
 
-    private  LocationObject(){}
-    public LocationObject (String myLocation,String Subject,String Date, String uid){
+    public  LocationObject(){}
+    public LocationObject (String myLocation,String Subject,String Date, String uid,String name,String Phone,String SClass){
         this.Subject=Subject;
         this.myLocation=myLocation;
         this.Date=Date;
-
-        //   this.uid=uid;
+        this.uid=uid;
+        this.name=name;
+        this.SClass=SClass;
+        this.Phone=Phone;
     }
 
     public String getSubject() {
@@ -29,15 +31,19 @@ public class LocationObject {
     public void setDate(String Date) {
         this.Date = Date;
     }
-
-
-    /*public Customer getCustomer() {
-        return customer;
+    public String getName() {
+        return name;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }*/
+    public void setName(String name) {
+        this.name=name;
+    }
+    public void setPhone(String phone) {
+        this.Phone=phone;
+    }
+    public String getPhone() {
+        return Phone;
+    }
 
     public String getMyLocation() {
         return myLocation;
@@ -47,11 +53,19 @@ public class LocationObject {
         this.myLocation = myLocation;
     }
 
-  /*  public String getUid() {
+   public String getUid() {
         return uid;
     }
 
     public void setUid(String uid) {
         this.uid = uid;
-    }*/
+    }
+
+    public String getSClass() {
+        return SClass;
+    }
+
+    public void setSClass(String SClass) {
+        this.SClass = SClass;
+    }
 }
