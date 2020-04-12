@@ -46,14 +46,13 @@ import static com.example.betaidan.R.layout.studentdial;
 public class TeacherActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     ListView lv;
     Button btn;
-    TextView tvname  ,tvPhone,tvAbout,tvexp,tv5;
+    TextView tvname  ,tvPhone,tvAbout,tvexp,tv5,tvSClass;
     String address;
     String name,phone,Experience,About,uid, sclass;
     AlertDialog.Builder adb;
     Intent t;
-    LinearLayout studentdialog1;
-    Dialog studentdialog12;
-    Student student;
+    LinearLayout studentdial;
+    Teacher t1;
     FusedLocationProviderClient fusedLocationProviderClient ;
     ArrayList<String> offer=new ArrayList<>();
     ArrayList<LocationObject> locationObjects2 = new ArrayList<>();
@@ -72,23 +71,16 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
 
 
     }
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         lb = locationObjects2.get(position);
         uid = lb.getUid();
         name = lb.getName();
         phone = lb.getPhone();
         sclass = lb.getSClass();
-        Toast.makeText(this, ""+name,Toast.LENGTH_LONG).show();
-        AlertDialog.Builder mBuild =  new AlertDialog.Builder(TeacherActivity.this);
-        View mView = getLayoutInflater().inflate(R.layout.studentdial, null);
-        TextView tvNamee = (TextView) findViewById(R.id.tvnamee);
-        TextView tvPhonee = (TextView) findViewById(R.id.tvPhonee);
-        TextView tvSClass = (TextView) findViewById(R.id.tvSClass);
-/*        tvNamee.setText(name);
-        tvPhonee.setText(phone);
-        tvSClass.setText(sclass);
+        Toast.makeText(this, "" + name, Toast.LENGTH_LONG).show();
         start();
-    */};
+
+    }
 
 
 
@@ -127,9 +119,7 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         @Override
         public void onClick(DialogInterface dialog, int which) {
             if (which == DialogInterface.BUTTON_POSITIVE) {
-                getLocation();
-                Intent t=new Intent(TeacherActivity.this,mapforTeacher.class);
-                Toast.makeText(TeacherActivity.this,"Successful",Toast.LENGTH_SHORT).show();
+                Toast.makeText(TeacherActivity.this,"Successful " + t1.getYes(),Toast.LENGTH_SHORT).show();
             }
             if (which == DialogInterface.BUTTON_NEGATIVE) {
                 dialog.cancel();
@@ -139,15 +129,20 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
 
     };
     @SuppressLint("CutPasteId")
-    public void start() {
-        ValueEventListener studentdetails;
 
-        studentdialog1 = (LinearLayout) getLayoutInflater().inflate(studentdial, null);
+    public void start() {
+
+        studentdial = (LinearLayout) getLayoutInflater().inflate(R.layout.studentdial, null);
+
+        tvname = (TextView) studentdial.findViewById(R.id.tvnamee);
+        tvPhone = (TextView) studentdial.findViewById(R.id.tvPhonee);
+        tvSClass = (TextView) studentdial.findViewById(R.id.tvSClass);
+        tvname.setText("Name: " + name);
+        tvPhone.setText("Phone: " + phone);
+        tvSClass.setText("Student Class: " + sclass);
         adb = new AlertDialog.Builder(this);
-        adb.setView(studentdialog1);
-        adb.setTitle("customer details  ");
-        tvname = (TextView) findViewById(R.id.tvnamee);
-        tvPhone = (TextView) findViewById(R.id.tvPhonee);
+        adb.setView(studentdial);
+
         adb.setPositiveButton("enter", (DialogInterface.OnClickListener) myclick);
         adb.setNegativeButton("cancel", (DialogInterface.OnClickListener) myclick);
         adb.show();

@@ -20,27 +20,35 @@
     <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="0.5" />
+
     <TextView
         android:id="@+id/tvnamee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Name: " />
     <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"/>
+
     <TextView
         android:id="@+id/tvPhonee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Phone: " />
     <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"/>
     <TextView
         android:id="@+id/tvSClass"
+        android:text="Student Class: "
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>

@@ -248,7 +248,7 @@ public class StudentActivity extends AppCompatActivity{
                     if(aBoolean){
                         intent = new Intent(StudentActivity.this,OrderDetails.class);
                         startActivity(intent);
-                        Toast.makeText(StudentActivity.this, "Successful match found", Toast.LENGTH_LONG).show();
+                        Toast.makeText(StudentActivity.this, "Teacher found", Toast.LENGTH_LONG).show();
                     }else {
                         intent = new Intent(StudentActivity.this, TeacherActivity.class);
                         startActivity(intent);
