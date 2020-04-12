@@ -79,9 +79,16 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         phone = lb.getPhone();
         sclass = lb.getSClass();
         Toast.makeText(this, ""+name,Toast.LENGTH_LONG).show();
-
-       // start();
-    };
+        AlertDialog.Builder mBuild =  new AlertDialog.Builder(TeacherActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.studentdial, null);
+        TextView tvNamee = (TextView) findViewById(R.id.tvnamee);
+        TextView tvPhonee = (TextView) findViewById(R.id.tvPhonee);
+        TextView tvSClass = (TextView) findViewById(R.id.tvSClass);
+/*        tvNamee.setText(name);
+        tvPhonee.setText(phone);
+        tvSClass.setText(sclass);
+        start();
+    */};
 
 
 
@@ -141,8 +148,6 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         adb.setTitle("customer details  ");
         tvname = (TextView) findViewById(R.id.tvnamee);
         tvPhone = (TextView) findViewById(R.id.tvPhonee);
-        tvAbout = (TextView) findViewById(R.id.tvAbout);
-        tvexp = (TextView) findViewById(R.id.tvexp);
         adb.setPositiveButton("enter", (DialogInterface.OnClickListener) myclick);
         adb.setNegativeButton("cancel", (DialogInterface.OnClickListener) myclick);
         adb.show();

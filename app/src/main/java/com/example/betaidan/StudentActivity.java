@@ -102,7 +102,7 @@ public class StudentActivity extends AppCompatActivity{
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("mehmezh_dog", "Failed to read value", databaseError.toException());
+                Log.w("Failed", "Failed to read value", databaseError.toException());
             }
         };
         refstudent.addValueEventListener(uploadlitner);
