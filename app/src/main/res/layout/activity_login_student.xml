@@ -43,18 +43,15 @@
             android:layout_weight="1" />
 
 
-
         <EditText
             android:id="@+id/eTname"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:visibility="invisible"
+            android:layout_weight="2"
             android:ems="10"
             android:hint="name"
-            android:inputType="textPersonName" />
-
-
+            android:inputType="textPersonName"
+            android:visibility="invisible" />
 
         <Space
             android:layout_width="match_parent"
@@ -67,7 +64,7 @@
             android:id="@+id/eTemail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:ems="10"
             android:hint="e-mail"
             android:inputType="textEmailAddress" />
@@ -85,7 +82,7 @@
             android:id="@+id/eTpass"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:ems="10"
             android:hint="password"
             android:inputType="textPassword" />
@@ -103,7 +100,7 @@
             android:id="@+id/eTphone"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:visibility="invisible"
             android:ems="10"
             android:hint="phone"
@@ -120,11 +117,11 @@
             android:id="@+id/eTclass"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:visibility="invisible"
+            android:layout_weight="2"
             android:ems="10"
             android:hint="Enter your class:"
-            android:inputType="text" />
+            android:inputType="text"
+            android:visibility="invisible" />
 
 
         <Spinner

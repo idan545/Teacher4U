@@ -14,7 +14,7 @@ public class FBref {
     public static DatabaseReference refstudent=FBDB.getReference("Students");
     public static DatabaseReference refTeacher=FBDB.getReference("Teachers");
     public static DatabaseReference refLocations=FBDB.getReference("OrderReq");
-    public static DatabaseReference refoffergrar=FBDB.getReference("offergrar");
+    public static DatabaseReference refLessonOffer=FBDB.getReference("LessonOffer");
     public static FirebaseStorage FBST = FirebaseStorage.getInstance();
     public static StorageReference refStor=FBST.getReference();
     public static StorageReference refImages=refStor.child("Images");

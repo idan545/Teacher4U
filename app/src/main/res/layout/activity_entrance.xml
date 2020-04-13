@@ -15,9 +15,9 @@
     <Button
         android:id="@+id/teacher"
         android:layout_width="match_parent"
-        android:layout_height="175dp"
-        android:textSize="50dp"
-        android:text="I'm a Teacher!" />
+        android:layout_height="218dp"
+        android:text="I'm a Teacher!"
+        android:textSize="50dp" />
 
     <Button
         android:id="@+id/student"

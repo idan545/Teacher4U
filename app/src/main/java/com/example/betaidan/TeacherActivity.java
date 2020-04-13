@@ -8,6 +8,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,10 +19,13 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.Layout;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,19 +44,19 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.example.betaidan.FBref.refLocations;
-import static com.example.betaidan.FBref.refstudent;
-import static com.example.betaidan.R.layout.studentdial;
+import static com.example.betaidan.FBref.refLessonOffer;
+
 
 public class TeacherActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     ListView lv;
-    Button btn;
-    TextView tvname  ,tvPhone,tvAbout,tvexp,tv5,tvSClass;
+    TextView tvname  ,tvPhone,tv5,tvSClass,tvdate,tvSubject;
+    EditText eTprice;
+    boolean trigger;
     String address;
-    String name,phone,Experience,About,uid, sclass;
+    String name,phone,uid, sclass,date,price,subject;
     AlertDialog.Builder adb;
-    Intent t;
     LinearLayout studentdial;
-    Teacher t1;
+    Intent intent;
     FusedLocationProviderClient fusedLocationProviderClient ;
     ArrayList<String> offer=new ArrayList<>();
     ArrayList<LocationObject> locationObjects2 = new ArrayList<>();
@@ -66,7 +70,7 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         lv.setOnItemClickListener(TeacherActivity.this);
         lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         adp = new ArrayAdapter<String>(TeacherActivity.this, R.layout.support_simple_spinner_dropdown_item, offer);
-
+        trigger = false;
         lv.setAdapter(adp);
 
 
@@ -76,9 +80,14 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         uid = lb.getUid();
         name = lb.getName();
         phone = lb.getPhone();
+        date = lb.getDate();
         sclass = lb.getSClass();
-        Toast.makeText(this, "" + name, Toast.LENGTH_LONG).show();
+        subject = lb.getSubject();
         start();
+    /*    if (trigger) {
+            final ProgressDialog pd = ProgressDialog.show(this, "Awaiting student acceptment..", "Waiting...", true);
+        }
+     */
 
     }
 
@@ -96,7 +105,7 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
                     locationObjects2.add(LocationObject);
                     String Location = LocationObject.getMyLocation();
                     String Subject = LocationObject.getSubject();
-                    offer.add("I am at:  " + Location + " and my subject is: " + Subject);
+                    offer.add(Location + " and my subject is: " + Subject);
 
                 }
 
@@ -119,7 +128,12 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         @Override
         public void onClick(DialogInterface dialog, int which) {
             if (which == DialogInterface.BUTTON_POSITIVE) {
-                Toast.makeText(TeacherActivity.this,"Successful " + t1.getYes(),Toast.LENGTH_SHORT).show();
+                price = eTprice.getText().toString();
+                price = price + "₪";
+                LessonOffer lo = new LessonOffer(name,phone,sclass,date,price,subject,uid);
+                refLessonOffer.child(uid).setValue(lo);
+                Toast.makeText(TeacherActivity.this,"Succeed",Toast.LENGTH_SHORT).show();
+                trigger = true;
             }
             if (which == DialogInterface.BUTTON_NEGATIVE) {
                 dialog.cancel();
@@ -137,14 +151,22 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         tvname = (TextView) studentdial.findViewById(R.id.tvnamee);
         tvPhone = (TextView) studentdial.findViewById(R.id.tvPhonee);
         tvSClass = (TextView) studentdial.findViewById(R.id.tvSClass);
+        tvdate = (TextView) studentdial.findViewById(R.id.tvDate);
+        eTprice = (EditText) studentdial.findViewById(R.id.eTprice);
+        tvSubject = (TextView) studentdial.findViewById(R.id.tvSubject);
         tvname.setText("Name: " + name);
         tvPhone.setText("Phone: " + phone);
         tvSClass.setText("Student Class: " + sclass);
+        tvdate.setText("Date: "+ date);
+        tvSubject.setText("Subject: " + subject);
+
+
+
         adb = new AlertDialog.Builder(this);
         adb.setView(studentdial);
 
-        adb.setPositiveButton("enter", (DialogInterface.OnClickListener) myclick);
-        adb.setNegativeButton("cancel", (DialogInterface.OnClickListener) myclick);
+        adb.setPositiveButton("Confirm", (DialogInterface.OnClickListener) myclick);
+        adb.setNegativeButton("Cancel", (DialogInterface.OnClickListener) myclick);
         adb.show();
 
 
@@ -185,4 +207,24 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         Toast.makeText(TeacherActivity.this, address, Toast.LENGTH_LONG).show();
     }
 
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main,menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        String st = item.getTitle().toString();
+        if(st.equals("Order History")) {
+            intent = new Intent(TeacherActivity.this, HistoryActivity.class);
+            startActivity(intent);
+        }
+        if(st.equals("Profile")) {
+            intent = new Intent(TeacherActivity.this, ProfileActivity.class);
+            startActivity(intent);
+        }
+        if(st.equals("Credits")) {
+            intent = new Intent(TeacherActivity.this, CreditsActivity.class);
+            startActivity(intent);
+        }
+        return true;
+    }
 }
