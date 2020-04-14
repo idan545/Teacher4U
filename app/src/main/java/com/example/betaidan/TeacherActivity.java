@@ -34,6 +34,7 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -43,8 +44,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static com.example.betaidan.FBref.refAuth;
 import static com.example.betaidan.FBref.refLocations;
 import static com.example.betaidan.FBref.refLessonOffer;
+import static com.example.betaidan.FBref.refTeacher;
 
 
 public class TeacherActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -52,7 +55,8 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
     TextView tvname  ,tvPhone,tv5,tvSClass,tvdate,tvSubject;
     EditText eTprice;
     String address;
-    String name,phone,uid, sclass,date,price,subject;
+    Teacher teacher = new Teacher();
+    String name,phone,uid, About,Experience,date,price,subject,sclass,name1,phone1;
     AlertDialog.Builder adb;
     LinearLayout studentdial;
     Intent intent;
@@ -70,6 +74,33 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         adp = new ArrayAdapter<String>(TeacherActivity.this, R.layout.support_simple_spinner_dropdown_item, offer);
         lv.setAdapter(adp);
+
+        FirebaseUser firebaseUser = refAuth.getCurrentUser();
+
+
+
+
+
+        //  FirebaseUser firebaseUser = refAuth.getCurrentUser();
+        refTeacher.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot ds) {
+                //  UID =  (String) data.getKey();
+                teacher = ds.getValue(Teacher.class);
+                name1 = teacher.getName();
+                phone1 = teacher.getPhone();
+                About = teacher.getAbout();
+                Experience = teacher.getExperience();
+
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("Failed", "Failed to read value", databaseError.toException());
+            }
+        });
 
 
     }
@@ -128,7 +159,7 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
             if (which == DialogInterface.BUTTON_POSITIVE) {
                 price = eTprice.getText().toString();
                 price = price + "₪";
-                LessonOffer lo = new LessonOffer(name,phone,sclass,date,price,subject,uid);
+                LessonOffer lo = new LessonOffer(name,phone,date,price,subject,uid,About,Experience);
                 refLessonOffer.child(uid).setValue(lo);
                 Toast.makeText(TeacherActivity.this,"Succeed",Toast.LENGTH_SHORT).show();
             }

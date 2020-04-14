@@ -30,6 +30,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -65,11 +66,12 @@ import static com.example.betaidan.FBref.refstudent;
 public class StudentActivity extends AppCompatActivity{
     //Initialize variable
     Button btLocation,DateBtn;
-    TextView tv1,tv2,tv3,tv4,tv5,TVD;
-    String uid="sfns",subject="dmfsf", name, phone, sclass,price;
+    TextView tv1,tv2,tv3,tv4,tv5,TVD,tvnamee1,tvPhonee1,tvAbout,tvExperience,tvDate1,tvSubject1,tVprice;
+    String uid="sfns",subject="dmfsf", name, phone, sclass,price,About,Experience,Date,Sbjct1,Name1,Phone1;
     EditText targetSubject;
+    LinearLayout priceofferdial;
     String test="try",eventdate;
-    Student student = new Student();
+    Student student;
     LessonOffer lo;
     Teacher yes;
     Boolean aBoolean=true;
@@ -77,6 +79,7 @@ public class StudentActivity extends AppCompatActivity{
     Intent intent;
     LocationObject locationObject1;
     FusedLocationProviderClient fusedLocationProviderClient ;
+    String UID;
     DatePickerDialog dpd;
     AlertDialog.Builder adb;
     Calendar c;
@@ -86,23 +89,23 @@ public class StudentActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
 
-        FirebaseUser firebaseUser = refAuth.getCurrentUser();
-        uid = firebaseUser.getUid();
+       FirebaseUser firebaseUser = refAuth.getCurrentUser();
+        UID = firebaseUser.getUid();
 
 
 
 
-        ValueEventListener uploadlitner = new ValueEventListener (){
+      //  FirebaseUser firebaseUser = refAuth.getCurrentUser();
+        refstudent.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot ds) {
-                for(DataSnapshot data : ds.getChildren()){
-                    String UID =  (String) data.getKey();
-                    Student student = data.getValue(Student.class);
+                   //  UID =  (String) data.getKey();
+                    student = ds.getValue(Student.class);
                     name = student.getName();
                     phone = student.getPhone();
                     sclass = student.getSClass();
 
-                }
+
         }
 
 
@@ -110,8 +113,8 @@ public class StudentActivity extends AppCompatActivity{
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.w("Failed", "Failed to read value", databaseError.toException());
             }
-        };
-        refstudent.addValueEventListener(uploadlitner);
+        });
+       // refstudent.addValueEventListener(uploadlitner);
 
 
 
@@ -243,7 +246,12 @@ public class StudentActivity extends AppCompatActivity{
 
                 }
                 price = lo.getPrice();
-                Toast.makeText(StudentActivity.this, "yes " + price, Toast.LENGTH_LONG).show();
+                Experience = lo.getExperience();
+                Date = lo.getDate();
+                Sbjct1 = lo.getSubject();
+                About = lo.getAbout();
+                Name1 = lo.getName();
+                Phone1 = lo.getPhone();
                 pd.dismiss();
                 confirmation();
 
@@ -254,9 +262,27 @@ public class StudentActivity extends AppCompatActivity{
         }
     };
     public void confirmation(){
+            priceofferdial = (LinearLayout) getLayoutInflater().inflate(R.layout.priceofferdial, null);
+
+            tvnamee1 = (TextView) priceofferdial.findViewById(R.id.tvnamee1);
+            tvPhonee1 = (TextView) priceofferdial.findViewById(R.id.tvPhonee1);
+            tvAbout = (TextView) priceofferdial.findViewById(R.id.tvAbout);
+            tvExperience = (TextView) priceofferdial.findViewById(R.id.tvExperience);
+            tvDate1 = (TextView) priceofferdial.findViewById(R.id.tvDate1);
+            tVprice = (TextView) priceofferdial.findViewById(R.id.tVprice);
+            tvSubject1 = (TextView) priceofferdial.findViewById(R.id.tvSubject1);
+            tvnamee1.setText("Name: " + Name1);
+            tvPhonee1.setText("Phone: " + Phone1);
+            tvAbout.setText("About the teacher: " + About);
+            tvExperience.setText("Experienced in: " + Experience);
+            tvDate1.setText("Date: "+ Date);
+            tvSubject1.setText("Subject: " + Sbjct1);
+            tVprice.setText("The price for 1 hour is: " + price);
+
+
+
             adb = new AlertDialog.Builder(this);
-            adb.setTitle("Order Details: ");
-            adb.setMessage("The price for 1 hour is: " + price);
+            adb.setView(priceofferdial);
             adb.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -269,6 +295,8 @@ public class StudentActivity extends AppCompatActivity{
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(StudentActivity.this, "Lesson Declined", Toast.LENGTH_LONG).show();
+                    refLessonOffer.child(UID).removeValue();
+                    refLocations.child(subject).removeValue();
                     dialog.cancel();
                 }
             });
@@ -281,13 +309,13 @@ public class StudentActivity extends AppCompatActivity{
         subject = targetSubject.getText().toString();
         if (eventdate.isEmpty()) TVD.setError("You must pick a date");
         if (subject.isEmpty()) targetSubject.setError("You must enter your subject");
-        locationObject1 = new LocationObject(test, subject, eventdate, uid, name, phone, sclass);
+        locationObject1 = new LocationObject(test, subject, eventdate, UID, name, phone, sclass);
         Toast.makeText(StudentActivity.this, locationObject1.getMyLocation(), Toast.LENGTH_SHORT).show();
         refLocations.child(subject).setValue(locationObject1);
          pd = ProgressDialog.show(this, "Search", "Searching...", true);
         Query query = refLessonOffer
                 .orderByChild("uid")
-                .equalTo(uid);
+                .equalTo(UID);
         query.addValueEventListener(VEL);
     }
 

@@ -1,8 +1,8 @@
 package com.example.betaidan;
 
 public class Student {
-    private String name, SClass,Phone,uid;
-    private boolean isStudent;
+    private String name, SClass,Phone,uid,email;
+
 
 
     public Student(){}
@@ -10,7 +10,7 @@ public class Student {
         this.name=FullName;
         this.SClass=SClass;
         this.Phone=Phone;
-        this.isStudent=isStudent;
+        this.email = email;
         this.uid=uid;
     }
     public String getName() {
@@ -34,10 +34,6 @@ public class Student {
         this.uid=uid;
     }
 
-    public boolean getisStudent() {
-        return isStudent;
-    }
-
     public String getSClass() {
         return SClass;
     }
@@ -46,31 +42,19 @@ public class Student {
         this.SClass = SClass;
     }
 
-    public boolean isStudent() {
-        return isStudent;
-    }
 
-    public void setStudent(boolean student) {
-        isStudent = student;
-    }
-
-    public void setStudent(){
-        this.isStudent=isStudent;
-    }
     /*public void copyStudent(Student student){
         this.name = student.getName();
         this.SClass = student.getStudentClass();
         this.Phone = student.getPhone();
         this.uid = student.getUid();
     }*/
-    /* public String getEmail() {
+   public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
-}*/
-
 }
 

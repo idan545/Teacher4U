@@ -1,17 +1,18 @@
 package com.example.betaidan;
 
 public class LessonOffer {
-    private String Name, Phone, SClass, Date, Price, Subject, uid;
+    private String Name, Phone, SClass, Date, Price, Subject, uid,About,Experience;
 
     public LessonOffer(){}
-    public LessonOffer(String Name, String Phone, String SClass, String Date, String Price, String Subject, String uid) {
+    public LessonOffer(String Name, String Phone, String Date, String Price, String Subject, String uid,String About,String Experience) {
         this.Name = Name;
-        this.SClass = SClass;
         this.Phone = Phone;
         this.Date = Date;
         this.Price = Price;
         this.Subject = Subject;
         this.uid = uid;
+        this.About=About;
+        this.Experience=Experience;
     }
 
     public String getName() {
@@ -22,13 +23,6 @@ public class LessonOffer {
         Name = name;
     }
 
-    public String getSClass() {
-        return SClass;
-    }
-
-    public void setSClass(String SClass) {
-        this.SClass = SClass;
-    }
     public String getPhone() {
         return Phone;
     }
@@ -67,5 +61,21 @@ public class LessonOffer {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getAbout() {
+        return About;
+    }
+
+    public void setAbout(String about) {
+        About = about;
+    }
+
+    public String getExperience() {
+        return Experience;
+    }
+
+    public void setExperience(String experience) {
+        Experience = experience;
     }
 }
