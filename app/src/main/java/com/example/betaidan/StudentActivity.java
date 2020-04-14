@@ -7,8 +7,10 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -76,6 +78,7 @@ public class StudentActivity extends AppCompatActivity{
     LocationObject locationObject1;
     FusedLocationProviderClient fusedLocationProviderClient ;
     DatePickerDialog dpd;
+    AlertDialog.Builder adb;
     Calendar c;
 
     @Override
@@ -242,6 +245,7 @@ public class StudentActivity extends AppCompatActivity{
                 price = lo.getPrice();
                 Toast.makeText(StudentActivity.this, "yes " + price, Toast.LENGTH_LONG).show();
                 pd.dismiss();
+                confirmation();
 
             }
         }
@@ -249,7 +253,28 @@ public class StudentActivity extends AppCompatActivity{
         public void onCancelled(@NonNull DatabaseError databaseError) {
         }
     };
-
+    public void confirmation(){
+            adb = new AlertDialog.Builder(this);
+            adb.setTitle("Order Details: ");
+            adb.setMessage("The price for 1 hour is: " + price);
+            adb.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(StudentActivity.this, "Lesson Accepted", Toast.LENGTH_LONG).show();
+                    intent = new Intent(StudentActivity.this,OrderDetails.class);
+                    startActivity(intent);
+                }
+            });
+            adb.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(StudentActivity.this, "Lesson Declined", Toast.LENGTH_LONG).show();
+                    dialog.cancel();
+                }
+            });
+            AlertDialog ad = adb.create();
+            ad.show();
+    }
 
     public void order(View view) {
         test = tv5.getText().toString();
@@ -264,40 +289,6 @@ public class StudentActivity extends AppCompatActivity{
                 .orderByChild("uid")
                 .equalTo(uid);
         query.addValueEventListener(VEL);
-        Query query1 = refTeacher.child("Teacher").orderByChild("phone").equalTo("true");
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren())
-                {//TODO get the data here
-                    aBoolean=yes.getYes();
-                    if(aBoolean){
-                        intent = new Intent(StudentActivity.this,OrderDetails.class);
-                        startActivity(intent);
-                        Toast.makeText(StudentActivity.this, "Teacher found", Toast.LENGTH_LONG).show();
-                    }else {
-                        intent = new Intent(StudentActivity.this, TeacherActivity.class);
-                        startActivity(intent);
-                        Toast.makeText(StudentActivity.this, "No match found.", Toast.LENGTH_LONG).show();
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-
-        query1.addValueEventListener(valueEventListener);
-
-        {
-
-
-        }
-
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
