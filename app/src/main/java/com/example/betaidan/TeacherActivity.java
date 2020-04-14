@@ -51,7 +51,6 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
     ListView lv;
     TextView tvname  ,tvPhone,tv5,tvSClass,tvdate,tvSubject;
     EditText eTprice;
-    boolean trigger;
     String address;
     String name,phone,uid, sclass,date,price,subject;
     AlertDialog.Builder adb;
@@ -70,7 +69,6 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         lv.setOnItemClickListener(TeacherActivity.this);
         lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         adp = new ArrayAdapter<String>(TeacherActivity.this, R.layout.support_simple_spinner_dropdown_item, offer);
-        trigger = false;
         lv.setAdapter(adp);
 
 
@@ -133,7 +131,6 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
                 LessonOffer lo = new LessonOffer(name,phone,sclass,date,price,subject,uid);
                 refLessonOffer.child(uid).setValue(lo);
                 Toast.makeText(TeacherActivity.this,"Succeed",Toast.LENGTH_SHORT).show();
-                trigger = true;
             }
             if (which == DialogInterface.BUTTON_NEGATIVE) {
                 dialog.cancel();

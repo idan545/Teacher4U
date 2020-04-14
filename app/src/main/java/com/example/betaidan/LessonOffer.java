@@ -3,7 +3,7 @@ package com.example.betaidan;
 public class LessonOffer {
     private String Name, Phone, SClass, Date, Price, Subject, uid;
 
-
+    public LessonOffer(){}
     public LessonOffer(String Name, String Phone, String SClass, String Date, String Price, String Subject, String uid) {
         this.Name = Name;
         this.SClass = SClass;

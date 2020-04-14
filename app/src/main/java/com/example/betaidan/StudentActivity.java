@@ -55,6 +55,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.example.betaidan.FBref.refAuth;
+import static com.example.betaidan.FBref.refLessonOffer;
 import static com.example.betaidan.FBref.refLocations;
 import static com.example.betaidan.FBref.refTeacher;
 import static com.example.betaidan.FBref.refstudent;
@@ -63,12 +64,14 @@ public class StudentActivity extends AppCompatActivity{
     //Initialize variable
     Button btLocation,DateBtn;
     TextView tv1,tv2,tv3,tv4,tv5,TVD;
-    String uid="sfns",subject="dmfsf", name, phone, sclass;
+    String uid="sfns",subject="dmfsf", name, phone, sclass,price;
     EditText targetSubject;
     String test="try",eventdate;
     Student student = new Student();
+    LessonOffer lo;
     Teacher yes;
     Boolean aBoolean=true;
+    ProgressDialog pd;
     Intent intent;
     LocationObject locationObject1;
     FusedLocationProviderClient fusedLocationProviderClient ;
@@ -95,9 +98,9 @@ public class StudentActivity extends AppCompatActivity{
                     name = student.getName();
                     phone = student.getPhone();
                     sclass = student.getSClass();
-                }
 
-            }
+                }
+        }
 
 
             @Override
@@ -228,6 +231,25 @@ public class StudentActivity extends AppCompatActivity{
             }
         });
     }
+    com.google.firebase.database.ValueEventListener VEL = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dS) {
+            if (dS.exists()) {
+                for(DataSnapshot data : dS.getChildren()) {
+                   lo = data.getValue(LessonOffer.class);
+
+                }
+                price = lo.getPrice();
+                Toast.makeText(StudentActivity.this, "yes " + price, Toast.LENGTH_LONG).show();
+                pd.dismiss();
+
+            }
+        }
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+        }
+    };
+
 
     public void order(View view) {
         test = tv5.getText().toString();
@@ -237,8 +259,12 @@ public class StudentActivity extends AppCompatActivity{
         locationObject1 = new LocationObject(test, subject, eventdate, uid, name, phone, sclass);
         Toast.makeText(StudentActivity.this, locationObject1.getMyLocation(), Toast.LENGTH_SHORT).show();
         refLocations.child(subject).setValue(locationObject1);
-        final ProgressDialog pd = ProgressDialog.show(this, "Search", "Searching...", true);
-        Query query = refTeacher.child("Teacher").orderByChild("phone").equalTo("true");
+         pd = ProgressDialog.show(this, "Search", "Searching...", true);
+        Query query = refLessonOffer
+                .orderByChild("uid")
+                .equalTo(uid);
+        query.addValueEventListener(VEL);
+        Query query1 = refTeacher.child("Teacher").orderByChild("phone").equalTo("true");
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -264,7 +290,7 @@ public class StudentActivity extends AppCompatActivity{
             }
         };
 
-        query.addValueEventListener(valueEventListener);
+        query1.addValueEventListener(valueEventListener);
 
         {
 
