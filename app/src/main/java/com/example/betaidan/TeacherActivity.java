@@ -37,6 +37,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
@@ -52,33 +53,33 @@ import static com.example.betaidan.FBref.refTeacher;
 
 public class TeacherActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     ListView lv;
-    TextView tvname  ,tvPhone,tv5,tvSClass,tvdate,tvSubject;
+    TextView tvname, tvPhone, tv5, tvSClass, tvdate, tvSubject;
     EditText eTprice;
     String address;
     Teacher teacher = new Teacher();
-    String name,phone,uid, About,Experience,date,price,subject,sclass,name1,phone1;
+    String name, phone, uid, About, Experience, date, price, subject, sclass, name1, phone1;
     AlertDialog.Builder adb;
     LinearLayout studentdial;
     Intent intent;
-    FusedLocationProviderClient fusedLocationProviderClient ;
-    ArrayList<String> offer=new ArrayList<>();
+    ProgressDialog pd;
+    LocationObject lo;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    ArrayList<String> offer = new ArrayList<>();
     ArrayList<LocationObject> locationObjects2 = new ArrayList<>();
     ArrayAdapter<String> adp;
     LocationObject lb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher);
-        lv=(ListView) findViewById(R.id.LV1);
+        lv = (ListView) findViewById(R.id.LV1);
         lv.setOnItemClickListener(TeacherActivity.this);
         lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         adp = new ArrayAdapter<String>(TeacherActivity.this, R.layout.support_simple_spinner_dropdown_item, offer);
         lv.setAdapter(adp);
 
         FirebaseUser firebaseUser = refAuth.getCurrentUser();
-
-
-
 
 
         //  FirebaseUser firebaseUser = refAuth.getCurrentUser();
@@ -104,6 +105,7 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
 
 
     }
+
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         lb = locationObjects2.get(position);
         uid = lb.getUid();
@@ -121,8 +123,9 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
     }
 
 
+    ValueEventListener locationListener;
 
-    ValueEventListener locationListener;{
+    {
         locationListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -153,15 +156,17 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         refLocations.addValueEventListener(locationListener);
 
     }
-    DialogInterface.OnClickListener myclick= new DialogInterface.OnClickListener() {
+
+    DialogInterface.OnClickListener myclick = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             if (which == DialogInterface.BUTTON_POSITIVE) {
                 price = eTprice.getText().toString();
                 price = price + "₪";
-                LessonOffer lo = new LessonOffer(name,phone,date,price,subject,uid,About,Experience);
+                LessonOffer lo = new LessonOffer(name1, phone1, date, price, subject, uid, About, Experience);
                 refLessonOffer.child(uid).setValue(lo);
-                Toast.makeText(TeacherActivity.this,"Succeed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(TeacherActivity.this, "Succeed", Toast.LENGTH_SHORT).show();
+                studentconfirm();
             }
             if (which == DialogInterface.BUTTON_NEGATIVE) {
                 dialog.cancel();
@@ -170,6 +175,7 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         }
 
     };
+
     @SuppressLint("CutPasteId")
 
     public void start() {
@@ -185,9 +191,8 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         tvname.setText("Name: " + name);
         tvPhone.setText("Phone: " + phone);
         tvSClass.setText("Student Class: " + sclass);
-        tvdate.setText("Date: "+ date);
+        tvdate.setText("Date: " + date);
         tvSubject.setText("Subject: " + subject);
-
 
 
         adb = new AlertDialog.Builder(this);
@@ -198,7 +203,6 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         adb.show();
 
 
-
     }
 
     private void getLocation() {
@@ -207,14 +211,14 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
             public void onComplete(@NonNull Task<Location> task) {
                 // Intiialize location
                 Location location = task.getResult();
-                if (location!=null){
+                if (location != null) {
                     //Intiialize geoCoder
                     Geocoder geocoder = new Geocoder(TeacherActivity.this,
                             Locale.getDefault());
                     // Intiialize address list
                     try {
-                        List<Address> addresses= geocoder.getFromLocation(
-                                location.getLatitude(),location.getLongitude(),1
+                        List<Address> addresses = geocoder.getFromLocation(
+                                location.getLatitude(), location.getLongitude(), 1
                         );
                         //set address
                         tv5.setText(Html.fromHtml(
@@ -223,7 +227,7 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
                         );
 
 
-                    } catch (IOException e){
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
 
@@ -235,24 +239,62 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         Toast.makeText(TeacherActivity.this, address, Toast.LENGTH_LONG).show();
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.main,menu);
-        return true;
+    public void studentconfirm() {
+        pd = ProgressDialog.show(this, "Awaiting student acceptment", "Waiting...", true);
+        Query query = refLocations
+                .orderByChild("uid").equalTo(uid);
+        query.addValueEventListener(VEL);
     }
-    public boolean onOptionsItemSelected(MenuItem item){
-        String st = item.getTitle().toString();
-        if(st.equals("Order History")) {
-            intent = new Intent(TeacherActivity.this, HistoryActivity.class);
-            startActivity(intent);
+
+    com.google.firebase.database.ValueEventListener VEL = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dS) {
+            if (dS.exists()) {
+                for (DataSnapshot data : dS.getChildren()) {
+                    lo = data.getValue(LocationObject.class);
+                }
+                if (lo.getStatus() == 2) {
+                    Toast.makeText(TeacherActivity.this, "Lesson Accepted!", Toast.LENGTH_LONG).show();
+                    pd.dismiss();
+                    intent = new Intent(TeacherActivity.this, OrderDetails.class);
+                    startActivity(intent);
+                }
+                else{
+                    if(lo.getStatus()==0){
+                        refLessonOffer.child(uid).removeValue();
+                        refLocations.child(uid).removeValue();
+                        Toast.makeText(TeacherActivity.this, "Lesson Declined", Toast.LENGTH_LONG).show();
+                        pd.dismiss();
+                    }
+                }
+            }
         }
-        if(st.equals("Profile")) {
-            intent = new Intent(TeacherActivity.this, ProfileActivity.class);
-            startActivity(intent);
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
         }
-        if(st.equals("Credits")) {
-            intent = new Intent(TeacherActivity.this, CreditsActivity.class);
-            startActivity(intent);
+
+        public boolean onCreateOptionsMenu(Menu menu) {
+            getMenuInflater().inflate(R.menu.main, menu);
+            return true;
         }
-        return true;
-    }
+
+        public boolean onOptionsItemSelected(MenuItem item) {
+            String st = item.getTitle().toString();
+            if (st.equals("Order History")) {
+                intent = new Intent(TeacherActivity.this, HistoryActivity.class);
+                startActivity(intent);
+            }
+            if (st.equals("Profile")) {
+                intent = new Intent(TeacherActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+            if (st.equals("Credits")) {
+                intent = new Intent(TeacherActivity.this, CreditsActivity.class);
+                startActivity(intent);
+            }
+            return true;
+        }
+    };
 }

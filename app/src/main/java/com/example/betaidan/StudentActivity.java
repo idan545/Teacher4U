@@ -66,6 +66,7 @@ import static com.example.betaidan.FBref.refstudent;
 public class StudentActivity extends AppCompatActivity{
     //Initialize variable
     Button btLocation,DateBtn;
+    int status;
     TextView tv1,tv2,tv3,tv4,tv5,TVD,tvnamee1,tvPhonee1,tvAbout,tvExperience,tvDate1,tvSubject1,tVprice;
     String uid="sfns",subject="dmfsf", name, phone, sclass,price,About,Experience,Date,Sbjct1,Name1,Phone1;
     EditText targetSubject;
@@ -77,7 +78,7 @@ public class StudentActivity extends AppCompatActivity{
     Boolean aBoolean=true;
     ProgressDialog pd;
     Intent intent;
-    LocationObject locationObject1;
+    LocationObject locationObject1,locationObject2,locationObject3;
     FusedLocationProviderClient fusedLocationProviderClient ;
     String UID;
     DatePickerDialog dpd;
@@ -286,6 +287,9 @@ public class StudentActivity extends AppCompatActivity{
             adb.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    status = 2;
+                    locationObject2 = new LocationObject(test, subject, eventdate, UID, name, phone, sclass, status);
+                    refLocations.child(UID).setValue(locationObject2);
                     Toast.makeText(StudentActivity.this, "Lesson Accepted", Toast.LENGTH_LONG).show();
                     intent = new Intent(StudentActivity.this,OrderDetails.class);
                     startActivity(intent);
@@ -294,9 +298,10 @@ public class StudentActivity extends AppCompatActivity{
             adb.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    status = 0;
+                    locationObject3 = new LocationObject(test, subject, eventdate, UID, name, phone, sclass, status);
+                    refLocations.child(UID).setValue(locationObject3);
                     Toast.makeText(StudentActivity.this, "Lesson Declined", Toast.LENGTH_LONG).show();
-                    refLessonOffer.child(UID).removeValue();
-                    refLocations.child(subject).removeValue();
                     dialog.cancel();
                 }
             });
@@ -309,9 +314,10 @@ public class StudentActivity extends AppCompatActivity{
         subject = targetSubject.getText().toString();
         if (eventdate.isEmpty()) TVD.setError("You must pick a date");
         if (subject.isEmpty()) targetSubject.setError("You must enter your subject");
-        locationObject1 = new LocationObject(test, subject, eventdate, UID, name, phone, sclass);
+        status = 1;
+        locationObject1 = new LocationObject(test, subject, eventdate, UID, name, phone, sclass, status);
         Toast.makeText(StudentActivity.this, locationObject1.getMyLocation(), Toast.LENGTH_SHORT).show();
-        refLocations.child(subject).setValue(locationObject1);
+        refLocations.child(UID).setValue(locationObject1);
          pd = ProgressDialog.show(this, "Search", "Searching...", true);
         Query query = refLessonOffer
                 .orderByChild("uid")

@@ -4,12 +4,14 @@ import android.location.Location;
 
 public class LocationObject {
     private String myLocation,Subject,Date,uid,name,Phone,SClass;
+    private int status;
 
     public  LocationObject(){}
-    public LocationObject (String myLocation,String Subject,String Date, String uid,String name,String Phone,String SClass){
+    public LocationObject (String myLocation,String Subject,String Date, String uid,String name,String Phone,String SClass,int status){
         this.Subject=Subject;
         this.myLocation=myLocation;
         this.Date=Date;
+        this.status=status;
         this.uid=uid;
         this.name=name;
         this.SClass=SClass;
@@ -67,5 +69,13 @@ public class LocationObject {
 
     public void setSClass(String SClass) {
         this.SClass = SClass;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
