@@ -123,7 +123,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    public boolean onCreateOptionsMenu (Menu menu) {
+ /*   public boolean onCreateOptionsMenu (Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -140,5 +140,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
         return true;
     }
+
+  */
 
 }

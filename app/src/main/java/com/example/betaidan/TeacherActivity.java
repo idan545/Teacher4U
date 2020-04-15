@@ -1,35 +1,29 @@
 package com.example.betaidan;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,8 +40,8 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.example.betaidan.FBref.refAuth;
-import static com.example.betaidan.FBref.refLocations;
 import static com.example.betaidan.FBref.refLessonOffer;
+import static com.example.betaidan.FBref.refLocations;
 import static com.example.betaidan.FBref.refTeacher;
 
 
@@ -133,11 +127,14 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
                 locationObjects2.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     String firstAddress = (String) data.getKey();
+
                     LocationObject LocationObject = data.getValue(LocationObject.class);
-                    locationObjects2.add(LocationObject);
-                    String Location = LocationObject.getMyLocation();
-                    String Subject = LocationObject.getSubject();
-                    offer.add(Location + " and my subject is: " + Subject);
+                    if(LocationObject.isAct()) {
+                        locationObjects2.add(LocationObject);
+                        String Location = LocationObject.getMyLocation();
+                        String Subject = LocationObject.getSubject();
+                        offer.add(Location + " and my subject is: " + Subject);
+                    }
 
                 }
 
@@ -163,7 +160,7 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
             if (which == DialogInterface.BUTTON_POSITIVE) {
                 price = eTprice.getText().toString();
                 price = price + "₪";
-                LessonOffer lo = new LessonOffer(name1, phone1, date, price, subject, uid, About, Experience);
+                LessonOffer lo = new LessonOffer(name1, phone1, date, price, subject, uid, About, Experience, true);
                 refLessonOffer.child(uid).setValue(lo);
                 Toast.makeText(TeacherActivity.this, "Succeed", Toast.LENGTH_SHORT).show();
                 studentconfirm();
@@ -256,13 +253,12 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
                 if (lo.getStatus() == 2) {
                     Toast.makeText(TeacherActivity.this, "Lesson Accepted!", Toast.LENGTH_LONG).show();
                     pd.dismiss();
-                    intent = new Intent(TeacherActivity.this, OrderDetails.class);
+                    intent = new Intent(TeacherActivity.this, HistoryActivity.class);
                     startActivity(intent);
                 }
                 else{
                     if(lo.getStatus()==0){
                         refLessonOffer.child(uid).removeValue();
-                        refLocations.child(uid).removeValue();
                         Toast.makeText(TeacherActivity.this, "Lesson Declined", Toast.LENGTH_LONG).show();
                         pd.dismiss();
                     }
@@ -276,12 +272,16 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         }
 
         public boolean onCreateOptionsMenu(Menu menu) {
-            getMenuInflater().inflate(R.menu.main, menu);
+            getMenuInflater().inflate(R.menu.second, menu);
             return true;
         }
 
         public boolean onOptionsItemSelected(MenuItem item) {
             String st = item.getTitle().toString();
+            if (st.equals("Orders")) {
+                intent = new Intent(TeacherActivity.this, TeacherActivity.class);
+                startActivity(intent);
+            }
             if (st.equals("Order History")) {
                 intent = new Intent(TeacherActivity.this, HistoryActivity.class);
                 startActivity(intent);

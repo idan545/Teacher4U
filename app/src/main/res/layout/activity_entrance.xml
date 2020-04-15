@@ -7,27 +7,27 @@
     tools:context=".EntranceActivity"
     android:orientation="vertical">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="560dp"
-        android:layout_weight="1" />
+  <Space
+      android:layout_width="match_parent"
+      android:layout_height="560dp"
+      android:layout_weight="1" />
 
-    <Button
-        android:id="@+id/teacher"
-        android:layout_width="match_parent"
-        android:layout_height="218dp"
-        android:text="I'm a Teacher!"
-        android:textSize="50dp" />
+  <Button
+      android:id="@+id/teacher"
+      android:layout_width="match_parent"
+      android:layout_height="218dp"
+      android:text="I'm a Teacher!"
+      android:textSize="50dp" />
 
-    <Button
-        android:id="@+id/student"
-        android:textSize="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="218dp"
-        android:text="I'm a Student!" />
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="560dp"
-        android:layout_weight="1" />
+  <Button
+      android:id="@+id/student"
+      android:textSize="50dp"
+      android:layout_width="match_parent"
+      android:layout_height="218dp"
+      android:text="I'm a Student!" />
+  <Space
+      android:layout_width="match_parent"
+      android:layout_height="560dp"
+      android:layout_weight="1" />
 
 </LinearLayout>

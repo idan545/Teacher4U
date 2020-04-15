@@ -1,10 +1,11 @@
 package com.example.betaidan;
 
 public class LessonOffer {
-    private String Name, Phone, SClass, Date, Price, Subject, uid,About,Experience;
+    private String Name, Phone, Date, Price, Subject, uid,About,Experience;
+    private boolean Act;
 
     public LessonOffer(){}
-    public LessonOffer(String Name, String Phone, String Date, String Price, String Subject, String uid,String About,String Experience) {
+    public LessonOffer(String Name, String Phone, String Date, String Price, String Subject, String uid,String About,String Experience,Boolean Act) {
         this.Name = Name;
         this.Phone = Phone;
         this.Date = Date;
@@ -12,6 +13,7 @@ public class LessonOffer {
         this.Subject = Subject;
         this.uid = uid;
         this.About=About;
+        this.Act=Act;
         this.Experience=Experience;
     }
 
@@ -77,5 +79,13 @@ public class LessonOffer {
 
     public void setExperience(String experience) {
         Experience = experience;
+    }
+
+    public boolean isAct() {
+        return Act;
+    }
+
+    public void setAct(boolean act) {
+        Act = act;
     }
 }

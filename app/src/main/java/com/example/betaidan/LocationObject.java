@@ -5,12 +5,14 @@ import android.location.Location;
 public class LocationObject {
     private String myLocation,Subject,Date,uid,name,Phone,SClass;
     private int status;
+    private boolean Act;
 
     public  LocationObject(){}
-    public LocationObject (String myLocation,String Subject,String Date, String uid,String name,String Phone,String SClass,int status){
+    public LocationObject (String myLocation,String Subject,String Date, String uid,String name,String Phone,String SClass,int status,Boolean Act){
         this.Subject=Subject;
         this.myLocation=myLocation;
         this.Date=Date;
+        this.Act=Act;
         this.status=status;
         this.uid=uid;
         this.name=name;
@@ -77,5 +79,14 @@ public class LocationObject {
 
     public void setStatus(int status) {
         this.status = status;
+
+    }
+
+    public boolean isAct() {
+        return Act;
+    }
+
+    public void setAct(boolean act) {
+        Act = act;
     }
 }
