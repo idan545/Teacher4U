@@ -79,6 +79,7 @@ public class StudentActivity extends AppCompatActivity{
     ProgressDialog pd;
     Intent intent;
     LocationObject locationObject1;
+    long count;
     FusedLocationProviderClient fusedLocationProviderClient ;
     String UID;
     DatePickerDialog dpd;
@@ -246,15 +247,17 @@ public class StudentActivity extends AppCompatActivity{
                    lo  = data.getValue(LessonOffer.class);
 
                 }
-                price = lo.getPrice();
-                Experience = lo.getExperience();
-                Date = lo.getDate();
-                Sbjct1 = lo.getSubject();
-                About = lo.getAbout();
-                Name1 = lo.getName();
-                Phone1 = lo.getPhone();
-                pd.dismiss();
-                confirmation();
+                if(lo.isAct()) {
+                    price = lo.getPrice();
+                    Experience = lo.getExperience();
+                    Date = lo.getDate();
+                    Sbjct1 = lo.getSubject();
+                    About = lo.getAbout();
+                    Name1 = lo.getName();
+                    Phone1 = lo.getPhone();
+                    pd.dismiss();
+                    confirmation();
+                }
 
             }
         }
@@ -291,8 +294,8 @@ public class StudentActivity extends AppCompatActivity{
                     locationObject1.setStatus(status);
                     locationObject1.setAct(false);
                     lo.setAct(false);
-                    refLessonOffer.child(UID).setValue(lo);
-                    refLocations.child(UID).setValue(locationObject1);
+                    refLessonOffer.child("" + lo.getCount()).setValue(lo);
+                    refLocations.child("" + lo.getCount()).setValue(locationObject1);
                     Toast.makeText(StudentActivity.this, "Lesson Accepted", Toast.LENGTH_LONG).show();
                     intent = new Intent(StudentActivity.this,HistoryActivity.class);
                     startActivity(intent);
@@ -303,7 +306,7 @@ public class StudentActivity extends AppCompatActivity{
                 public void onClick(DialogInterface dialog, int which) {
                     status = 0;
                     locationObject1.setStatus(status);
-                    refLocations.child(UID).setValue(locationObject1);
+                    refLocations.child("" + lo.getCount()).setValue(locationObject1);
                     Toast.makeText(StudentActivity.this, "Lesson Declined", Toast.LENGTH_LONG).show();
                     dialog.cancel();
                     pd.show();
@@ -319,15 +322,37 @@ public class StudentActivity extends AppCompatActivity{
         if (eventdate.isEmpty()) TVD.setError("You must pick a date");
         if (subject.isEmpty()) targetSubject.setError("You must enter your subject");
         status = 1;
-
-        locationObject1 = new LocationObject(test, subject, eventdate, UID, name, phone, sclass, status, true);
-        Toast.makeText(StudentActivity.this, locationObject1.getMyLocation(), Toast.LENGTH_SHORT).show();
-        refLocations.child(UID).setValue(locationObject1);
-         pd = ProgressDialog.show(this, "Search", "Searching...", true);
-        Query query = refLessonOffer
-                .orderByChild("uid")
-                .equalTo(UID);
-        query.addValueEventListener(VEL);
+        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference();
+        mDatabaseRef.child("OrderReq").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    count = dataSnapshot.getChildrenCount();
+                    count = count + 1;
+                    locationObject1 = new LocationObject(test, subject, eventdate, UID, name, phone, sclass, status, true, count);
+                    refLocations.child("" + count).setValue(locationObject1);
+                    Toast.makeText(StudentActivity.this, locationObject1.getMyLocation(), Toast.LENGTH_SHORT).show();
+                    pd = ProgressDialog.show(StudentActivity.this, "Search", "Searching...", true);
+                    Query query = refLessonOffer
+                            .orderByChild("count")
+                            .equalTo(count);
+                    query.addValueEventListener(VEL);
+                } else {
+                    count = 1;
+                    locationObject1 = new LocationObject(test, subject, eventdate, UID, name, phone, sclass, status, true, count);
+                    refLocations.child("" + count).setValue(locationObject1);
+                    Toast.makeText(StudentActivity.this, locationObject1.getMyLocation(), Toast.LENGTH_SHORT).show();
+                    pd = ProgressDialog.show(StudentActivity.this, "Search", "Searching...", true);
+                    Query query = refLessonOffer
+                            .orderByChild("count")
+                            .equalTo(count);
+                    query.addValueEventListener(VEL);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
@@ -337,7 +362,7 @@ public class StudentActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item){
         String st = item.getTitle().toString();
         if(st.equals("Order History")) {
-            intent = new Intent(StudentActivity.this, OrderDetails.class);
+            intent = new Intent(StudentActivity.this, HistoryActivity.class);
             startActivity(intent);
         }
         if(st.equals("Profile")) {

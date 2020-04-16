@@ -11,35 +11,110 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import static com.example.betaidan.FBref.refAuth;
 import static com.example.betaidan.FBref.refImages;
+import static com.example.betaidan.FBref.refLessonOffer;
+import static com.example.betaidan.FBref.refTeacher;
+import static com.example.betaidan.FBref.refstudent;
+
 import java.io.File;
 import java.io.IOException;
 
 public class ProfileActivity extends AppCompatActivity {
-
+    TextView nameview,phoneview,classview,aboutview,expview;
     ImageView iV;
+    String UID,name,phone,sclass,about,exp,name1,phone1;
     Intent intent;
     int Gallery=1;
+    Student student;
+    Teacher teacher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        nameview = (TextView) findViewById(R.id.nameview);
+        phoneview = (TextView) findViewById(R.id.phoneview);
+        classview = (TextView) findViewById(R.id.classview);
+        aboutview = (TextView) findViewById(R.id.aboutview);
+        expview = (TextView) findViewById(R.id.expview);
         iV=(ImageView)findViewById(R.id.iV);
+
+        FirebaseUser firebaseUser = refAuth.getCurrentUser();
+        UID = firebaseUser.getUid();
+
+        Query query = refstudent
+                .orderByChild("uid")
+                .equalTo(UID);
+        query.addListenerForSingleValueEvent(VEL);
+
+        Query query2 = refTeacher
+                .orderByChild("uid")
+                .equalTo(UID);
+        query2.addListenerForSingleValueEvent(VEL2);
     }
+
+    com.google.firebase.database.ValueEventListener VEL = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dS) {
+            if (dS.exists()) {
+                for(DataSnapshot data : dS.getChildren()) {
+                    student = data.getValue(Student.class);
+                    name = student.getName();
+                    Toast.makeText(ProfileActivity.this, name, Toast.LENGTH_LONG).show();
+
+                    phone = student.getPhone();
+                    sclass = student.getSClass();
+                }
+                studentprof();
+
+            }
+        }
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+        }
+    };
+
+    com.google.firebase.database.ValueEventListener VEL2 = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dS) {
+            if (dS.exists()) {
+                for(DataSnapshot data : dS.getChildren()) {
+                    teacher = data.getValue(Teacher.class);
+                    name1 = teacher.getName();
+                    phone1 = teacher.getPhone();
+                    about = teacher.getAbout();
+                    teacherprof();
+                }
+
+            }
+        }
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+        }
+    };
 
     /**
      * Selecting image file to upload to Firebase Storage
@@ -122,6 +197,41 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void studentprof() {
+
+                nameview.setVisibility(View.VISIBLE);
+                phoneview.setVisibility(View.VISIBLE);
+                classview.setVisibility(View.VISIBLE);
+                aboutview.setVisibility(View.INVISIBLE);
+                expview.setVisibility(View.INVISIBLE);
+
+
+                nameview.setText(name);
+                phoneview.setText(phone);
+                classview.setText(sclass);
+    }
+
+    private void teacherprof() {
+        SpannableString ss = new SpannableString("Teacher Profile");
+        ClickableSpan span = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                nameview.setVisibility(View.VISIBLE);
+                phoneview.setVisibility(View.VISIBLE);
+                classview.setVisibility(View.INVISIBLE);
+                aboutview.setVisibility(View.VISIBLE);
+                expview.setVisibility(View.VISIBLE);
+
+                nameview.setText(name1);
+                phoneview.setText(phone1);
+                aboutview.setText(about);
+                expview.setText(exp);
+            }
+        };
+    }
+
+
 
  /*   public boolean onCreateOptionsMenu (Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);

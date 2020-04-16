@@ -56,7 +56,7 @@ public class LoginStudent extends AppCompatActivity {
         cBstayconnect=(CheckBox)findViewById(R.id.cBstayconnect);
         tVregister=(TextView) findViewById(R.id.tVregister);
         btn=(Button)findViewById(R.id.btn);
-        spinner = findViewById(R.id.spinner1);
+     //   spinner = findViewById(R.id.spinner1);
      /*   ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.numbers, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

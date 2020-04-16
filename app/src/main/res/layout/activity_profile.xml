@@ -62,6 +62,14 @@
 
 
         <TextView
+            android:id="@+id/classview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Class"
+            android:inputType="text" />
+
+        <TextView
             android:id="@+id/nameview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,12 +86,22 @@
             android:hint="phone" />
 
         <TextView
-            android:id="@+id/classview"
+            android:id="@+id/aboutview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:hint="Class"
             android:inputType="text"
-            android:hint="Class" />
+            android:text="About the teacher:" />
+
+        <TextView
+            android:id="@+id/expview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Class"
+            android:inputType="text"
+            android:text="Experienced in:" />
 
         <Button
             android:layout_width="wrap_content"

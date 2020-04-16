@@ -6,13 +6,15 @@ public class LocationObject {
     private String myLocation,Subject,Date,uid,name,Phone,SClass;
     private int status;
     private boolean Act;
+    private long count;
 
     public  LocationObject(){}
-    public LocationObject (String myLocation,String Subject,String Date, String uid,String name,String Phone,String SClass,int status,Boolean Act){
+    public LocationObject (String myLocation,String Subject,String Date, String uid,String name,String Phone,String SClass,int status,Boolean Act,long count){
         this.Subject=Subject;
         this.myLocation=myLocation;
         this.Date=Date;
         this.Act=Act;
+        this.count=count;
         this.status=status;
         this.uid=uid;
         this.name=name;
@@ -88,5 +90,13 @@ public class LocationObject {
 
     public void setAct(boolean act) {
         Act = act;
+    }
+
+    public long getCount() {
+        return count;
+    }
+
+    public void setCount(long count) {
+        this.count = count;
     }
 }

@@ -3,13 +3,20 @@ package com.example.betaidan;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,11 +32,15 @@ import static com.example.betaidan.FBref.refAuth;
 import static com.example.betaidan.FBref.refLessonOffer;
 import static com.example.betaidan.FBref.refLocations;
 
-public class HistoryActivity extends AppCompatActivity {
-    String UID,price,About,Experience,Date,Sbjct1,Name1,Phone1;
+public class HistoryActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+    String UID, price, About, Experience, Date, Sbjct1, Name1, Phone1;
+    TextView tvnamee1, tvPhonee1, tvAbout, tvExperience, tvDate1, tvSubject1, tVprice;
     LessonOffer lo;
+    LinearLayout OfferDial;
     Intent intent;
+    AlertDialog.Builder adb;
     ArrayList<String> details = new ArrayList<>();
+    ArrayList<LessonOffer> Detail = new ArrayList<>();
     ArrayList<LocationObject> locationObjects2 = new ArrayList<>();
     ArrayAdapter<String> adp;
     ListView LV1;
@@ -40,7 +51,8 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
         ValueEventListener locationListener;
         LV1 = (ListView) findViewById(R.id.LV1);
-
+        LV1.setOnItemClickListener(HistoryActivity.this);
+        LV1.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 
         FirebaseUser firebaseUser = refAuth.getCurrentUser();
@@ -98,18 +110,14 @@ public class HistoryActivity extends AppCompatActivity {
         @Override
         public void onDataChange(@NonNull DataSnapshot dS) {
             if (dS.exists()) {
-                for(DataSnapshot data : dS.getChildren()) {
+                for (DataSnapshot data : dS.getChildren()) {
 
                     lo = data.getValue(LessonOffer.class);
-                    if (!lo.isAct()){
-                        price = lo.getPrice();
-                        Experience = lo.getExperience();
+                    if (!lo.isAct()) {
+                        Detail.add(lo);
                         Date = lo.getDate();
                         Sbjct1 = lo.getSubject();
-                        About = lo.getAbout();
-                        Name1 = lo.getName();
-                        Phone1 = lo.getPhone();
-                        details.add("Subject: "  + Sbjct1  + " Date: " + Date);
+                        details.add("Subject: " + Sbjct1 + " Date: " + Date);
 
                     }
 
@@ -120,37 +128,76 @@ public class HistoryActivity extends AppCompatActivity {
                 LV1.setAdapter(adp);
             }
         }
+
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
         }
     };
 
 
+        public boolean onCreateOptionsMenu (Menu menu){
+            getMenuInflater().inflate(R.menu.second, menu);
+            return true;
+        }
+
+        public boolean onOptionsItemSelected (MenuItem item){
+            String st = item.getTitle().toString();
+            if (st.equals("Orders")) {
+                intent = new Intent(HistoryActivity.this, TeacherActivity.class);
+                startActivity(intent);
+            }
+            if (st.equals("Order History")) {
+                intent = new Intent(HistoryActivity.this, HistoryActivity.class);
+                startActivity(intent);
+            }
+            if (st.equals("Profile")) {
+                intent = new Intent(HistoryActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+            if (st.equals("Credits")) {
+                intent = new Intent(HistoryActivity.this, CreditsActivity.class);
+                startActivity(intent);
+            }
+            return true;
+        }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if(!Detail.get(position).isAct()){
+                price = Detail.get(position).getPrice();
+                Experience = Detail.get(position).getExperience();
+                Date = Detail.get(position).getDate();
+                Sbjct1 = Detail.get(position).getSubject();
+                About = Detail.get(position).getAbout();
+                Name1 = Detail.get(position).getName();
+                Phone1 = Detail.get(position).getPhone();
+                adblv();
+            }
+    }
+    public void adblv(){
+        OfferDial = (LinearLayout) getLayoutInflater().inflate(R.layout.priceofferdial, null);
+
+        tvnamee1 = (TextView) OfferDial.findViewById(R.id.tvnamee1);
+        tvPhonee1 = (TextView) OfferDial.findViewById(R.id.tvPhonee1);
+        tvAbout = (TextView) OfferDial.findViewById(R.id.tvAbout);
+        tvExperience = (TextView) OfferDial.findViewById(R.id.tvExperience);
+        tvDate1 = (TextView) OfferDial.findViewById(R.id.tvDate1);
+        tVprice = (TextView) OfferDial.findViewById(R.id.tVprice);
+        tvSubject1 = (TextView) OfferDial.findViewById(R.id.tvSubject1);
+        tvnamee1.setText("Name: " + Name1);
+        tvPhonee1.setText("Phone: " + Phone1);
+        tvAbout.setText("About the teacher: " + About);
+        tvExperience.setText("Experienced in: " + Experience);
+        tvDate1.setText("Date: "+ Date);
+        tvSubject1.setText("Subject: " + Sbjct1);
+        tVprice.setText("The price for 1 hour is: " + price);
 
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.second, menu);
-        return true;
+
+        adb = new AlertDialog.Builder(this);
+        adb.setView(OfferDial);
+        AlertDialog ad = adb.create();
+        ad.show();
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        String st = item.getTitle().toString();
-        if (st.equals("Orders")) {
-            intent = new Intent(HistoryActivity.this, TeacherActivity.class);
-            startActivity(intent);
-        }
-        if (st.equals("Order History")) {
-            intent = new Intent(HistoryActivity.this, HistoryActivity.class);
-            startActivity(intent);
-        }
-        if (st.equals("Profile")) {
-            intent = new Intent(HistoryActivity.this, ProfileActivity.class);
-            startActivity(intent);
-        }
-        if (st.equals("Credits")) {
-            intent = new Intent(HistoryActivity.this, CreditsActivity.class);
-            startActivity(intent);
-        }
-        return true;
-    }
 }
