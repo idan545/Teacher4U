@@ -53,7 +53,7 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
     EditText eTprice;
     String address;
     Teacher teacher = new Teacher();
-    String name, phone, uid, About, Experience, date, price, subject, sclass, name1, phone1;
+    String name, phone, uid, About, Experience, date, price, subject, sclass, name1, phone1,uidteach;
     AlertDialog.Builder adb;
     LinearLayout studentdial;
     long count;
@@ -90,6 +90,7 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
                 phone1 = teacher.getPhone();
                 About = teacher.getAbout();
                 Experience = teacher.getExperience();
+                uidteach = teacher.getUid();
 
 
             }
@@ -186,7 +187,7 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
                     }
                 });
                 */
-                LessonOffer lo = new LessonOffer(name1, phone1, date, price, subject, uid, About, Experience, true, count);
+                LessonOffer lo = new LessonOffer(name1, phone1, date, price, subject, uid, About, Experience, true, count,uidteach);
                 refLessonOffer.child("" + count).setValue(lo);
                 Toast.makeText(TeacherActivity.this, "Succeed", Toast.LENGTH_SHORT).show();
                 studentconfirm();

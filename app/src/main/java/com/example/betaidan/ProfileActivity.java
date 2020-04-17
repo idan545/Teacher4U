@@ -22,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.betaidan.Student;
+import com.example.betaidan.Teacher;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
@@ -200,23 +202,20 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void studentprof() {
 
-                nameview.setVisibility(View.VISIBLE);
-                phoneview.setVisibility(View.VISIBLE);
-                classview.setVisibility(View.VISIBLE);
-                aboutview.setVisibility(View.INVISIBLE);
-                expview.setVisibility(View.INVISIBLE);
+        nameview.setVisibility(View.VISIBLE);
+        phoneview.setVisibility(View.VISIBLE);
+        classview.setVisibility(View.VISIBLE);
+        aboutview.setVisibility(View.INVISIBLE);
+        expview.setVisibility(View.INVISIBLE);
 
 
-                nameview.setText(name);
-                phoneview.setText(phone);
-                classview.setText(sclass);
+        nameview.setText(name);
+        phoneview.setText(phone);
+        classview.setText(sclass);
     }
 
     private void teacherprof() {
-        SpannableString ss = new SpannableString("Teacher Profile");
-        ClickableSpan span = new ClickableSpan() {
-            @Override
-            public void onClick(View textView) {
+
                 nameview.setVisibility(View.VISIBLE);
                 phoneview.setVisibility(View.VISIBLE);
                 classview.setVisibility(View.INVISIBLE);
@@ -227,7 +226,6 @@ public class ProfileActivity extends AppCompatActivity {
                 phoneview.setText(phone1);
                 aboutview.setText(about);
                 expview.setText(exp);
-            }
         };
     }
 
@@ -237,7 +235,6 @@ public class ProfileActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
     public boolean onOptionsItemSelected(MenuItem item){
         String st = item.getTitle().toString();
         if(st.equals("Order History")) {
@@ -250,7 +247,4 @@ public class ProfileActivity extends AppCompatActivity {
         }
         return true;
     }
-
   */
-
-}

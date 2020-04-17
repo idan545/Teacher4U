@@ -72,7 +72,7 @@
         android:layout_weight="0.5" />
 
     <TextView
-        android:id="@+id/tvDate1"
+        android:id="@+id/tvDate2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -98,7 +98,7 @@
         android:layout_weight="0.5" />
 
     <TextView
-        android:id="@+id/tVprice"
+        android:id="@+id/tVprice1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"

@@ -1,16 +1,17 @@
 package com.example.betaidan;
 
 public class LessonOffer {
-    private String Name, Phone, Date, Price, Subject, uid,About,Experience;
+    private String Name, Phone, Date, Price, Subject, uid,About,Experience,uidteach;
     private boolean Act;
     long count;
 
     public LessonOffer(){}
-    public LessonOffer(String Name, String Phone, String Date, String Price, String Subject, String uid,String About,String Experience,Boolean Act,Long count) {
+    public LessonOffer(String Name, String Phone, String Date, String Price, String Subject, String uid,String About,String Experience,Boolean Act,Long count,String uidteach) {
         this.Name = Name;
         this.Phone = Phone;
         this.Date = Date;
         this.Price = Price;
+        this.uidteach=uidteach;
         this.Subject = Subject;
         this.uid = uid;
         this.About=About;
@@ -97,5 +98,13 @@ public class LessonOffer {
 
     public void setCount(long count) {
         this.count = count;
+    }
+
+    public String getUidteach() {
+        return uidteach;
+    }
+
+    public void setUidteach(String uidteach) {
+        this.uidteach = uidteach;
     }
 }
