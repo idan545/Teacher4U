@@ -2,10 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/ll1"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_weight="1"
-    >
+    android:layout_weight="1">
 
     <TextView
         android:id="@+id/textView7"
@@ -13,9 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Student Details:"
-        android:textStyle="bold"
-        android:textSize="24sp" />
+        android:text="Order Details:"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <Space
         android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
         android:layout_weight="0.5" />
 
     <TextView
-        android:id="@+id/tvnamee"
+        android:id="@+id/tvname1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -35,7 +35,7 @@
         android:layout_weight="0.5"/>
 
     <TextView
-        android:id="@+id/tvPhonee"
+        android:id="@+id/tvPhone1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -45,20 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"/>
-    <TextView
-        android:id="@+id/tvSClass"
-        android:text="Student Class: "
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"/>
 
     <TextView
-        android:id="@+id/tvDate"
+        android:id="@+id/tvDate10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -68,29 +57,41 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="0.5" />
 
     <TextView
-        android:id="@+id/tvSubject"
+        android:id="@+id/tVprice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Subject: " />
+        android:hint="Price" />
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="0.5" />
 
-    <EditText
-        android:id="@+id/eTprice"
+    <TextView
+        android:id="@+id/tVsbj"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:inputType="number"
-        android:hint="Enter the price you offer for 1 hour:" />
+        android:hint="Subject" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5" />
+
+    <TextView
+        android:id="@+id/tVsclass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:hint="Class: " />
 
     <Space
         android:layout_width="match_parent"

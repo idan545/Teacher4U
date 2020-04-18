@@ -33,16 +33,18 @@ import static com.example.betaidan.FBref.refLessonOffer;
 import static com.example.betaidan.FBref.refLocations;
 
 public class HistoryActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    String UID, price, About, Experience, Date, Sbjct1, Name1, Phone1,name,phone,sclass;
-    TextView tvnamee1, tvPhonee1, tvAbout, tvExperience, tvDate1, tvSubject1,
-            tVprice,tvname1,tvPhone1,tvDate2,tVsbj,tVprice1,tVsclass;
-    Boolean teacher = false;
+    String UID,uidteach, price, About, Experience, Date, Sbjct1, Name1, Phone1,name,phone,sclass,subject,price1,date1,price2;
+    TextView tvnamee1, tvPhonee1, tvAbout, tvExperience, tvDate1, tvSubject1,tvDate10,
+            tvname1,tvPhone1,tVsbj,tVprice1,tVsclass,tVprice;
     LessonOffer lo;
-    LocationObject Lo1;
-    LinearLayout OfferDial;
+    LocationObject Lo1,locationOb;
+    Boolean type;
+    LinearLayout OfferDial,odial;
     Intent intent;
-    AlertDialog.Builder adb;
+    AlertDialog.Builder adb,add;
     ArrayList<String> details = new ArrayList<>();
+    ArrayList<String> UidList = new ArrayList<>();
+
     ArrayList<LessonOffer> Detail = new ArrayList<>();
     ArrayList<LocationObject> lob = new ArrayList<>();
     ArrayAdapter<String> adp;
@@ -59,6 +61,7 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
 
         FirebaseUser firebaseUser = refAuth.getCurrentUser();
         UID = firebaseUser.getUid();
+        uidteach = firebaseUser.getUid();
 
 
         Query query = refLessonOffer
@@ -66,11 +69,10 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
                 .equalTo(UID);
         query.addValueEventListener(VEL);
 
-        Query query1 = refLessonOffer
+        Query query1 = refLocations
                 .orderByChild("uidteach")
-                .equalTo(UID);
-        query1.addValueEventListener(VEL);
-
+                .equalTo(uidteach);
+        query1.addValueEventListener(VEL2);
 
 
 
@@ -122,9 +124,37 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
                     if (!lo.isAct()) {
                         Detail.add(lo);
                         Date = lo.getDate();
+                        type = false;
                         Sbjct1 = lo.getSubject();
                         details.add("Subject: " + Sbjct1 + " Date: " + Date);
 
+                    }
+
+
+                }
+                adp = new ArrayAdapter<String>(HistoryActivity.this,
+                        R.layout.support_simple_spinner_dropdown_item, details);
+                LV1.setAdapter(adp);
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+        }
+    };
+
+    com.google.firebase.database.ValueEventListener VEL2 = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dS) {
+            if (dS.exists()) {
+                for (DataSnapshot data : dS.getChildren()) {
+                    locationOb = data.getValue(LocationObject.class);
+                    if (!locationOb.isAct()) {
+                        lob.add(locationOb);
+                        Date = locationOb.getDate();
+                        type = true;
+                        Sbjct1 = locationOb.getSubject();
+                        details.add("Subject: " + Sbjct1 + " Date: " + Date);
                     }
 
 
@@ -170,7 +200,8 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if(!Detail.get(position).isAct()){
+        if(!type) {
+            if (!Detail.get(position).isAct()) {
                 price = Detail.get(position).getPrice();
                 Experience = Detail.get(position).getExperience();
                 Date = Detail.get(position).getDate();
@@ -180,7 +211,46 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
                 Phone1 = Detail.get(position).getPhone();
                 adblv();
             }
+        }
+        else{
+            if (!lob.get(position).isAct()) {
+                date1 = lob.get(position).getDate();
+                subject = lob.get(position).getSubject();
+                name = lob.get(position).getName();
+                phone = lob.get(position).getPhone();
+                sclass = lob.get(position).getSClass();
+                price2 = lob.get(position).getPrice();
+                adbltc();
+            }
+
+        }
     }
+
+    private void adbltc() {
+        odial = (LinearLayout) getLayoutInflater().inflate(R.layout.historydial, null);
+
+        tvname1 = (TextView) odial.findViewById(R.id.tvname1);
+        tvPhone1 = (TextView) odial.findViewById(R.id.tvPhone1);
+        tvDate10 = (TextView) odial.findViewById(R.id.tvDate10);
+        tVsbj = (TextView) odial.findViewById(R.id.tVsbj);
+        tVsclass =  (TextView) odial.findViewById(R.id.tVsclass);
+        tVprice = (TextView) odial.findViewById(R.id.tVprice);
+
+        tvname1.setText("Student: " + name);
+        tvPhone1.setText("Phone: " + phone);
+        tvDate10.setText("Date: "+ Date);
+        tVsbj.setText("Subject: " + Sbjct1);
+        tVsclass.setText("Class: " +sclass);
+        tVprice.setText("Price: " + price2);
+
+
+
+        add = new AlertDialog.Builder(this);
+        add.setView(odial);
+        AlertDialog ade = add.create();
+        ade.show();
+    }
+
 
     public void adblv(){
         OfferDial = (LinearLayout) getLayoutInflater().inflate(R.layout.priceofferdial, null);
@@ -189,7 +259,7 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
         tvPhonee1 = (TextView) OfferDial.findViewById(R.id.tvPhonee1);
         tvAbout = (TextView) OfferDial.findViewById(R.id.tvAbout);
         tvExperience = (TextView) OfferDial.findViewById(R.id.tvExperience);
-        tvDate2 = (TextView) OfferDial.findViewById(R.id.tvDate2);
+        tvDate1 = (TextView) OfferDial.findViewById(R.id.tvDate2);
         tVprice1 = (TextView) OfferDial.findViewById(R.id.tVprice1);
         tvSubject1 = (TextView) OfferDial.findViewById(R.id.tvSubject1);
 
@@ -197,7 +267,7 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
         tvPhonee1.setText("Phone: " + Phone1);
         tvAbout.setText("About: " + About);
         tvExperience.setText("Experienced in: " + Experience);
-        tvDate2.setText("Date: "+ Date);
+        tvDate1.setText("Date: "+ Date);
         tvSubject1.setText("Subject: " + Sbjct1);
         tVprice1.setText("The price for 1 hour is: " + price);
 
