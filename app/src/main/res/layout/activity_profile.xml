@@ -7,112 +7,112 @@
     android:orientation="horizontal"
     tools:context=".ProfileActivity">
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2" />
+  <Space
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="2" />
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="5"
-        android:orientation="vertical">
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.2" />
-
-        <TextView
-            android:id="@+id/tVtitle"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:autoSizeTextType="uniform"
-            android:gravity="center"
-            android:text="Profile"
-            android:textStyle="bold" />
-
-
-        <ImageView
-            android:id="@+id/iV"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:onClick="upload"
-            android:layout_weight="2"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <Button
-            android:id="@+id/btnUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="upload"
-            android:text="Upload" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="View pic"
-            android:onClick="download"/>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5" />
-
-
-        <TextView
-            android:id="@+id/classview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Class"
-            android:inputType="text" />
-
-        <TextView
-            android:id="@+id/nameview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="textPersonName"
-            android:hint="name" />
-
-        <TextView
-            android:id="@+id/phoneview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="phone"
-            android:hint="phone" />
-
-        <TextView
-            android:id="@+id/aboutview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Class"
-            android:inputType="text"
-            android:text="About the teacher:" />
-
-        <TextView
-            android:id="@+id/expview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Class"
-            android:inputType="text"
-            android:text="Experienced in:" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="finish" />
-    </LinearLayout>
+  <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="5"
+      android:orientation="vertical">
 
     <Space
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2" />
+
+    <TextView
+        android:id="@+id/tVtitle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:text="Profile"
+        android:textStyle="bold" />
+
+
+    <ImageView
+        android:id="@+id/iV"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:onClick="upload"
+        android:layout_weight="2"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/btnUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="upload"
+        android:text="Upload" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View pic"
+        android:onClick="download"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5" />
+
+
+    <TextView
+        android:id="@+id/classview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="Class"
+        android:inputType="text"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/nameview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="visible"
+        android:inputType="textPersonName"
+        android:hint="name" />
+
+    <TextView
+        android:id="@+id/phoneview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_weight="1"
+        android:hint="phone" />
+
+    <TextView
+        android:id="@+id/aboutview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="invisible"
+        android:hint="Class"
+        android:inputType="text"
+        android:text="About the teacher:" />
+
+    <TextView
+        android:id="@+id/expview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="invisible"
+        android:hint="Class"
+        android:inputType="text"
+        android:text="Experienced in:" />
+
+  </LinearLayout>
+
+  <Space
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="2" />
 
 
 </LinearLayout>

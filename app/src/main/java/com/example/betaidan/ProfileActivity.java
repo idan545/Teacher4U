@@ -45,189 +45,182 @@ import java.io.File;
 import java.io.IOException;
 
 public class ProfileActivity extends AppCompatActivity {
-    TextView nameview,phoneview,classview,aboutview,expview;
-    ImageView iV;
-    String UID,name,phone,sclass,about,exp,name1,phone1;
-    Intent intent;
-    int Gallery=1;
-    Student student;
-    Teacher teacher;
+  TextView nameview,phoneview,classview,aboutview,expview;
+  ImageView iV;
+  String UID,name,phone,sclass,about,exp,name1,phone1;
+  Intent intent;
+  int Gallery=1;
+  Student student;
+  Teacher teacher;
 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_profile);
+    nameview = (TextView) findViewById(R.id.nameview);
+    phoneview = (TextView) findViewById(R.id.phoneview);
+    classview = (TextView) findViewById(R.id.classview);
+    aboutview = (TextView) findViewById(R.id.aboutview);
+    expview = (TextView) findViewById(R.id.expview);
+    iV=(ImageView)findViewById(R.id.iV);
+
+    FirebaseUser firebaseUser = refAuth.getCurrentUser();
+    UID = firebaseUser.getUid();
+
+    Query query = refstudent
+            .orderByChild("uid")
+            .equalTo(UID);
+    query.addListenerForSingleValueEvent(VEL);
+
+    Query query2 = refTeacher
+            .orderByChild("uid")
+            .equalTo(UID);
+    query2.addListenerForSingleValueEvent(VEL2);
+  }
+
+  com.google.firebase.database.ValueEventListener VEL = new ValueEventListener() {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-        nameview = (TextView) findViewById(R.id.nameview);
-        phoneview = (TextView) findViewById(R.id.phoneview);
-        classview = (TextView) findViewById(R.id.classview);
-        aboutview = (TextView) findViewById(R.id.aboutview);
-        expview = (TextView) findViewById(R.id.expview);
-        iV=(ImageView)findViewById(R.id.iV);
+    public void onDataChange(@NonNull DataSnapshot dS) {
+      if (dS.exists()) {
+        for(DataSnapshot data : dS.getChildren()) {
+          student = data.getValue(Student.class);
+          name = student.getName();
+          Toast.makeText(ProfileActivity.this, name, Toast.LENGTH_LONG).show();
+          phone = student.getPhone();
+          sclass = student.getSClass();
+        }
+        studentprof();
 
-        FirebaseUser firebaseUser = refAuth.getCurrentUser();
-        UID = firebaseUser.getUid();
-
-        Query query = refstudent
-                .orderByChild("uid")
-                .equalTo(UID);
-        query.addListenerForSingleValueEvent(VEL);
-
-        Query query2 = refTeacher
-                .orderByChild("uid")
-                .equalTo(UID);
-        query2.addListenerForSingleValueEvent(VEL2);
+      }
     }
-
-    com.google.firebase.database.ValueEventListener VEL = new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dS) {
-            if (dS.exists()) {
-                for(DataSnapshot data : dS.getChildren()) {
-                    student = data.getValue(Student.class);
-                    name = student.getName();
-                    Toast.makeText(ProfileActivity.this, name, Toast.LENGTH_LONG).show();
-
-                    phone = student.getPhone();
-                    sclass = student.getSClass();
-                }
-                studentprof();
-
-            }
-        }
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-        }
-    };
-
-    com.google.firebase.database.ValueEventListener VEL2 = new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dS) {
-            if (dS.exists()) {
-                for(DataSnapshot data : dS.getChildren()) {
-                    teacher = data.getValue(Teacher.class);
-                    name1 = teacher.getName();
-                    phone1 = teacher.getPhone();
-                    about = teacher.getAbout();
-                    teacherprof();
-                }
-
-            }
-        }
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-        }
-    };
-
-    /**
-     * Selecting image file to upload to Firebase Storage
-     * <p>
-     *
-     * @param view
-     */
-    public void upload(View view) {
-        Intent si = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(si, Gallery);
-    }
-
-    /**
-     * Uploading selected image file to Firebase Storage
-     * <p>
-     *
-     * @param requestCode   The call sign of the intent that requested the result
-     * @param resultCode    A code that symbols the status of the result of the activity
-     * @param data          The data returned
-     */
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onCancelled(@NonNull DatabaseError databaseError) {
+    }
+  };
 
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == Gallery) {
-                Uri file = data.getData();
-                if (file != null) {
-                    final ProgressDialog pd=ProgressDialog.show(this,"Upload image","Uploading...",true);
-                    StorageReference refImg = refImages.child("aaa.jpg");
-                    refImg.putFile(file)
-                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    pd.dismiss();
-                                    Toast.makeText(ProfileActivity.this, "Image Uploaded", Toast.LENGTH_LONG).show();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                    pd.dismiss();
-                                    Toast.makeText(ProfileActivity.this, "Upload failed", Toast.LENGTH_LONG).show();
-                                }
-                            });
-                } else {
-                    Toast.makeText(this, "No Image was selected", Toast.LENGTH_LONG).show();
-                }
-            }
+  com.google.firebase.database.ValueEventListener VEL2 = new ValueEventListener() {
+    @Override
+    public void onDataChange(@NonNull DataSnapshot dS) {
+      if (dS.exists()) {
+        for(DataSnapshot data : dS.getChildren()) {
+          teacher = data.getValue(Teacher.class);
+          name1 = teacher.getName();
+          phone1 = teacher.getPhone();
+          about = teacher.getAbout();
+          exp = teacher.getExperience();
+          teacherprof();
         }
+
+      }
     }
-
-    /**
-     * Downloading selected image file from Firebase Storage
-     * <p>
-     *
-     * @param view
-     */
-    public void download(View view) throws IOException {
-        final ProgressDialog pd=ProgressDialog.show(this,"Image download","downloading...",true);
-
-        StorageReference refImg = refImages.child("aaa.jpg");
-
-        final File localFile = File.createTempFile("aaa","jpg");
-        refImg.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                pd.dismiss();
-                Toast.makeText(ProfileActivity.this, "Image download success", Toast.LENGTH_LONG).show();
-                String filePath = localFile.getPath();
-                Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-                iV.setImageBitmap(bitmap);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                pd.dismiss();
-                Toast.makeText(ProfileActivity.this, "Image download failed", Toast.LENGTH_LONG).show();
-            }
-        });
+    @Override
+    public void onCancelled(@NonNull DatabaseError databaseError) {
     }
+  };
 
-    private void studentprof() {
+  /**
+   * Selecting image file to upload to Firebase Storage
+   * <p>
+   *
+   * @param view
+   */
+  public void upload(View view) {
+    Intent si = new Intent(Intent.ACTION_PICK,
+            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    startActivityForResult(si, Gallery);
+  }
 
-        nameview.setVisibility(View.VISIBLE);
-        phoneview.setVisibility(View.VISIBLE);
-        classview.setVisibility(View.VISIBLE);
-        aboutview.setVisibility(View.INVISIBLE);
-        expview.setVisibility(View.INVISIBLE);
+  /**
+   * Uploading selected image file to Firebase Storage
+   * <p>
+   *
+   * @param requestCode   The call sign of the intent that requested the result
+   * @param resultCode    A code that symbols the status of the result of the activity
+   * @param data          The data returned
+   */
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
 
-
-        nameview.setText(name);
-        phoneview.setText(phone);
-        classview.setText(sclass);
+    if (resultCode == Activity.RESULT_OK) {
+      if (requestCode == Gallery) {
+        Uri file = data.getData();
+        if (file != null) {
+          final ProgressDialog pd=ProgressDialog.show(this,"Upload image","Uploading...",true);
+          StorageReference refImg = refImages.child("aaa.jpg");
+          refImg.putFile(file)
+                  .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                      pd.dismiss();
+                      Toast.makeText(ProfileActivity.this, "Image Uploaded", Toast.LENGTH_LONG).show();
+                    }
+                  })
+                  .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                      pd.dismiss();
+                      Toast.makeText(ProfileActivity.this, "Upload failed", Toast.LENGTH_LONG).show();
+                    }
+                  });
+        } else {
+          Toast.makeText(this, "No Image was selected", Toast.LENGTH_LONG).show();
+        }
+      }
     }
+  }
 
-    private void teacherprof() {
+  /**
+   * Downloading selected image file from Firebase Storage
+   * <p>
+   *
+   * @param view
+   */
+  public void download(View view) throws IOException {
+    final ProgressDialog pd=ProgressDialog.show(this,"Image download","downloading...",true);
 
-                nameview.setVisibility(View.VISIBLE);
-                phoneview.setVisibility(View.VISIBLE);
-                classview.setVisibility(View.INVISIBLE);
-                aboutview.setVisibility(View.VISIBLE);
-                expview.setVisibility(View.VISIBLE);
+    StorageReference refImg = refImages.child("aaa.jpg");
 
-                nameview.setText(name1);
-                phoneview.setText(phone1);
-                aboutview.setText(about);
-                expview.setText(exp);
-        };
-    }
+    final File localFile = File.createTempFile("aaa","jpg");
+    refImg.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+      @Override
+      public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+        pd.dismiss();
+        Toast.makeText(ProfileActivity.this, "Image download success", Toast.LENGTH_LONG).show();
+        String filePath = localFile.getPath();
+        Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+        iV.setImageBitmap(bitmap);
+      }
+    }).addOnFailureListener(new OnFailureListener() {
+      @Override
+      public void onFailure(@NonNull Exception exception) {
+        pd.dismiss();
+        Toast.makeText(ProfileActivity.this, "Image download failed", Toast.LENGTH_LONG).show();
+      }
+    });
+  }
+
+  private void studentprof() {
+
+    classview.setVisibility(View.VISIBLE);
+
+
+    nameview.setText(name);
+    phoneview.setText(phone);
+    classview.setText(sclass);
+  }
+
+  private void teacherprof() {
+
+    aboutview.setVisibility(View.VISIBLE);
+    expview.setVisibility(View.VISIBLE);
+
+    nameview.setText(name1);
+    phoneview.setText(phone1);
+    aboutview.setText(about);
+    expview.setText(exp);
+  }
+}
 
 
 
