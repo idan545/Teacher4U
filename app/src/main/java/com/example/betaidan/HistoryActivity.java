@@ -173,14 +173,18 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
 
 
     public boolean onCreateOptionsMenu (Menu menu){
-            getMenuInflater().inflate(R.menu.second, menu);
+            getMenuInflater().inflate(R.menu.main, menu);
             return true;
         }
 
         public boolean onOptionsItemSelected (MenuItem item){
             String st = item.getTitle().toString();
-            if (st.equals("Orders")) {
+            if (st.equals("Orders")&&type) {
                 intent = new Intent(HistoryActivity.this, TeacherActivity.class);
+                startActivity(intent);
+            }
+            else if(st.equals("Orders")&&!type){
+                intent = new Intent(HistoryActivity.this, StudentActivity.class);
                 startActivity(intent);
             }
             if (st.equals("Order History")) {

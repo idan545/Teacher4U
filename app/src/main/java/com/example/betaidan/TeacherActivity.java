@@ -302,7 +302,7 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
 
     };
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.second, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
