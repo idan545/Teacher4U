@@ -4,30 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/start"
     tools:context=".EntranceActivity"
-    android:orientation="vertical">
+    android:orientation="horizontal">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:orientation="vertical">
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+      <Button
+          android:id="@+id/teacher"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@drawable/br1"
+          android:text="I'm a Teacher!"
+          android:textColor="@android:color/white"
+          android:textSize="18sp" />
+
+      <Space
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="0.01" />
+
+      <Button
+          android:id="@+id/student"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@drawable/br1"
+          android:text="I'm a Student!"
+          android:textColor="@android:color/white"
+          android:textSize="18sp" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+  </LinearLayout>
 
   <Space
-      android:layout_width="match_parent"
-      android:layout_height="560dp"
-      android:layout_weight="1" />
-
-  <Button
-      android:id="@+id/teacher"
-      android:layout_width="match_parent"
-      android:layout_height="218dp"
-      android:text="I'm a Teacher!"
-      android:textSize="50dp" />
-
-  <Button
-      android:id="@+id/student"
-      android:textSize="50dp"
-      android:layout_width="match_parent"
-      android:layout_height="218dp"
-      android:text="I'm a Student!" />
-  <Space
-      android:layout_width="match_parent"
-      android:layout_height="560dp"
-      android:layout_weight="1" />
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="2" />
 
 </LinearLayout>

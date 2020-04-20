@@ -85,7 +85,6 @@ public class ProfileActivity extends AppCompatActivity {
         for(DataSnapshot data : dS.getChildren()) {
           student = data.getValue(Student.class);
           name = student.getName();
-          Toast.makeText(ProfileActivity.this, name, Toast.LENGTH_LONG).show();
           phone = student.getPhone();
           sclass = student.getSClass();
         }
@@ -221,23 +220,3 @@ public class ProfileActivity extends AppCompatActivity {
     expview.setText(exp);
   }
 }
-
-
-
- /*   public boolean onCreateOptionsMenu (Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-    public boolean onOptionsItemSelected(MenuItem item){
-        String st = item.getTitle().toString();
-        if(st.equals("Order History")) {
-            intent = new Intent(ProfileActivity.this, HistoryActivity.class);
-            startActivity(intent);
-        }
-        if(st.equals("Credits")) {
-            intent = new Intent(ProfileActivity.this, CreditsActivity.class);
-            startActivity(intent);
-        }
-        return true;
-    }
-  */

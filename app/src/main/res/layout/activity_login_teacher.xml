@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/br2"
     android:layout_height="match_parent"
     android:orientation="horizontal"
     tools:context=".LoginTeacher">
@@ -29,13 +30,13 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
         android:id="@+id/tVtitle"
         android:text="Login"
         android:autoSizeTextType="uniform"
-
+        android:textColor="@android:color/white"
         android:textStyle="bold" />
 
     <Space
@@ -51,6 +52,8 @@
         android:layout_weight="2"
         android:ems="10"
         android:hint="name"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
         android:inputType="textPersonName"
         android:visibility="invisible" />
 
@@ -69,6 +72,8 @@
         android:layout_height="0dp"
         android:layout_weight="2"
         android:ems="10"
+        android:textColorHint="@android:color/white"
+        android:textColor="@android:color/white"
         android:hint="e-mail"
         android:inputType="textEmailAddress" />
 
@@ -88,6 +93,8 @@
         android:layout_weight="2"
         android:ems="10"
         android:hint="password"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
         android:inputType="textPassword" />
 
 
@@ -105,6 +112,8 @@
         android:layout_weight="2"
         android:ems="10"
         android:hint="phone"
+        android:textColorHint="@android:color/white"
+        android:textColor="@android:color/white"
         android:inputType="phone"
         android:visibility="invisible" />
 
@@ -122,6 +131,8 @@
         android:layout_weight="2"
         android:ems="10"
         android:hint="Enter your experience"
+        android:textColorHint="@android:color/white"
+        android:textColor="@android:color/white"
         android:inputType="text"
         android:visibility="invisible" />
 
@@ -138,6 +149,8 @@
         android:layout_weight="2"
         android:ems="10"
         android:hint="Tell something about yourself"
+        android:textColorHint="@android:color/white"
+        android:textColor="@android:color/white"
         android:inputType="text"
         android:visibility="invisible" />
 
@@ -145,6 +158,7 @@
         android:id="@+id/cBstayconnect"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:textColor="@android:color/white"
         android:layout_weight="1"
         android:text="Stay Connected" />
 
@@ -171,11 +185,10 @@
         android:layout_weight="0.2" />
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:orientation="horizontal">
 
       <Space
@@ -186,10 +199,13 @@
       <Button
           android:id="@+id/btn"
           android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="5"
+          android:layout_height="match_parent"
+          android:layout_weight="7"
+          android:background="@drawable/br1"
           android:onClick="logorreg"
-          android:text="Login" />
+          android:text="Login"
+          android:textColor="@android:color/white"
+          />
 
       <Space
           android:layout_width="0dp"
@@ -201,7 +217,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5" />
+        android:layout_weight="1.5" />
   </LinearLayout>
 
   <Space
