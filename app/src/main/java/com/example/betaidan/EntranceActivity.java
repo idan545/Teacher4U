@@ -9,6 +9,13 @@ import android.view.View;
 import android.widget.Button;
 
 public class EntranceActivity extends AppCompatActivity {
+  /**
+   * @author		Idan Cohen
+   * @version	    V1.0
+   * @since		5/4/2020
+   * The second activity that will send the user to their relevant login/register activity.
+   */
+
   Button teacher, student;
   Intent t;
 

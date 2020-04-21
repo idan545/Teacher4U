@@ -45,6 +45,12 @@ import java.io.File;
 import java.io.IOException;
 
 public class ProfileActivity extends AppCompatActivity {
+  /**
+   * @author		Idan Cohen
+   * @version	    V1.0
+   * @since		19/4/2020
+   * This activity will show the profile of the user, there is an option to upload image.
+   */
   TextView nameview,phoneview,classview,aboutview,expview;
   ImageView iV;
   String UID,name,phone,sclass,about,exp,name1,phone1;

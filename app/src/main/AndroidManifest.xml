@@ -16,7 +16,6 @@
         <activity android:name=".CreditsActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".HistoryActivity" />
-        <activity android:name=".OrderDetails" />
         <activity android:name=".TeacherActivity" />
         <activity android:name=".StudentActivity" />
         <activity android:name=".LoginStudent" />
@@ -30,7 +29,6 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".FetchAddressIntentService" />
     </application>
 
 </manifest>

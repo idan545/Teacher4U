@@ -30,6 +30,13 @@ import static com.example.betaidan.FBref.refAuth;
 import static com.example.betaidan.FBref.refTeacher;
 
 public class LoginTeacher extends AppCompatActivity {
+  /**
+   * @author		Idan Cohen
+   * @version	    V1.0
+   * @since		5/4/2020
+   * Login/Register Activity for Teacher
+   */
+
 
   TextView tVtitle, tVregister;
   EditText eTname, eTphone, eTemail, eTpass,eTexp,eTab;
@@ -62,6 +69,11 @@ public class LoginTeacher extends AppCompatActivity {
   }
 
   protected void onStart() {
+    /**
+     * Checks if the user already checked the "Stay Connected" button.
+     * <p>
+     *
+     */
     super.onStart();
     SharedPreferences settings=getSharedPreferences("PREFS_NAME",MODE_PRIVATE);
     Boolean isChecked=settings.getBoolean("stayConnect",false);
@@ -81,6 +93,10 @@ public class LoginTeacher extends AppCompatActivity {
   }
 
   private void regoption() {
+    /**
+     * Switches the screen from Login to Register.
+     * <p>
+     */
     SpannableString ss = new SpannableString("Don't have an account?  Register here!");
     ClickableSpan span = new ClickableSpan() {
       @Override
@@ -102,6 +118,10 @@ public class LoginTeacher extends AppCompatActivity {
   }
 
   private void logoption() {
+    /**
+     * Switches the screen from Register to Login.
+     * <p>
+     */
     SpannableString ss = new SpannableString("Already have an account?  Login here!");
     ClickableSpan span = new ClickableSpan() {
       @Override
@@ -122,6 +142,12 @@ public class LoginTeacher extends AppCompatActivity {
   }
 
   public void logorreg(View view) {
+    /**
+     * Checks if the user is registered and logging in, else it will register.
+     * <p>
+     *
+     * @param	view Button	on click operate the action.
+     */
     if (registered) {
       email=eTemail.getText().toString();
       password=eTpass.getText().toString();

@@ -1,6 +1,12 @@
 package com.example.betaidan;
 
 public class Teacher {
+  /**
+   * @author		Idan Cohen
+   * @version	    V1.0
+   * @since		8/4/2020
+   * Constructor for teacher class.
+   */
   private String name,phone,Experience,About,uid,email;
   private  Boolean yes;
 

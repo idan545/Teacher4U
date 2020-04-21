@@ -1,6 +1,12 @@
 package com.example.betaidan;
 
 public class LessonOffer {
+    /**
+     * @author		Idan Cohen
+     * @version	    V1.0
+     * @since		10/4/2020
+     * Constructor for offering a private lesson.
+     */
     private String Name, Phone, Date, Price, Subject, uid,About,Experience,uidteach;
     private boolean Act;
     long count;

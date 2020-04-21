@@ -64,6 +64,13 @@ import static com.example.betaidan.FBref.refTeacher;
 import static com.example.betaidan.FBref.refstudent;
 
 public class StudentActivity extends AppCompatActivity{
+  /**
+   * @author		Idan Cohen
+   * @version	    V1.0
+   * @since		7/4/2020
+   * Student's will order their private lesson in this activity.
+   */
+
   //Initialize variable
   Button btLocation,DateBtn;
   int status;
@@ -139,6 +146,12 @@ public class StudentActivity extends AppCompatActivity{
     btLocation.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        /**
+         * Asking for getting location permission.
+         * <p>
+         *
+         * @param	view Button	on click operate the action.
+         */
         //check premission
         if (ActivityCompat.checkSelfPermission(StudentActivity.this
                 , Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
@@ -153,6 +166,10 @@ public class StudentActivity extends AppCompatActivity{
       }
 
       private void getLocation() {
+        /**
+         * When premission is granted, the action will fetch the users location.
+         * <p>
+         */
         fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
           @Override
           public void onComplete(@NonNull Task<Location> task) {
@@ -208,6 +225,11 @@ public class StudentActivity extends AppCompatActivity{
     DateBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
+        /**
+         * Opens up the calendar for the user
+         * <p>
+         * @param view Button on click operate the action
+         */
 
         c = Calendar.getInstance();
         final int day = c.get(Calendar.DAY_OF_MONTH);
@@ -217,6 +239,12 @@ public class StudentActivity extends AppCompatActivity{
         dpd = new DatePickerDialog(StudentActivity.this, new DatePickerDialog.OnDateSetListener() {
           @Override
           public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            /**
+             * Let's the student select the date that they want the private lesson will be at.
+             * <p>
+             *
+             * @param	DatePicker view, int year, int Month, int dayOfMonth The date will be saved in those parameters.
+             */
 
             Toast.makeText(StudentActivity.this, "" + dayOfMonth + "/" + (month + 1) + "/" + year, Toast.LENGTH_SHORT).show();
             if (month<10) {
@@ -268,6 +296,12 @@ public class StudentActivity extends AppCompatActivity{
     }
   };
   public void confirmation(){
+    /**
+     * Opens up AlertDialog for the confirmation of the Lesson.
+     * <p>
+     *
+     */
+
     priceofferdial = (LinearLayout) getLayoutInflater().inflate(R.layout.priceofferdial, null);
 
     tvnamee1 = (TextView) priceofferdial.findViewById(R.id.tvnamee1);
@@ -285,15 +319,19 @@ public class StudentActivity extends AppCompatActivity{
     tvDate1.setText("Date: "+ Date);
     tvSubject1.setText("Subject: " + Sbjct1);
     tVprice.setText("The price for 1 hour is: "  + price);
-    Toast.makeText(this, "" + price, Toast.LENGTH_LONG).show();
-
-
 
     adb = new AlertDialog.Builder(this);
     adb.setView(priceofferdial);
     adb.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int which) {
+        /**
+         * When accepted it will update the teacher's uid, order status, if the order is still active and the price,
+         * it will sent the user to the history activity.
+         * <p>
+         *
+         * @param	DialogInterface dialog, int which.
+         */
         status = 2;
         locationObject1.setStatus(status);
         locationObject1.setAct(false);
@@ -310,6 +348,12 @@ public class StudentActivity extends AppCompatActivity{
     adb.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int which) {
+        /**
+         * When cancelled it will update the order status and will keep searching for another teacher.
+         * <p>
+         *
+         * @param	DialogInterface dialog, int which.
+         */
         status = 0;
         locationObject1.setStatus(status);
         refLocations.child("" + lo.getCount()).setValue(locationObject1);
@@ -323,6 +367,12 @@ public class StudentActivity extends AppCompatActivity{
   }
 
   public void order(View view) {
+    /**
+     * The action will upload the order to firebase and it will search for an offer.
+     * <p>
+     *
+     * @param view Button on click operate the action.
+     */
     test = tv5.getText().toString();
     subject = targetSubject.getText().toString();
     if (eventdate.isEmpty()) TVD.setError("You must pick a date");

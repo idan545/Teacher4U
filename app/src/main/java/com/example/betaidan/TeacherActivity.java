@@ -48,6 +48,13 @@ import static com.example.betaidan.FBref.refTeacher;
 
 
 public class TeacherActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+    /**
+     * @author		Idan Cohen
+     * @version	    V1.0
+     * @since		8/4/2020
+     * This activity will show any active order based on location.
+     */
+
     ListView lv;
     TextView tvname, tvPhone, tv5, tvSClass, tvdate, tvSubject;
     EditText eTprice;

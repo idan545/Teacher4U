@@ -3,6 +3,12 @@ package com.example.betaidan;
 import android.location.Location;
 
 public class LocationObject {
+  /**
+   * @author		Idan Cohen
+   * @version	    V1.0
+   * @since		8/4/2020
+   * Constructor for ordering/requesting private lesson.
+   */
   private String myLocation,Subject,Date,uid,name,Phone,SClass,uidteach = "",price = "";
   private int status;
   private boolean Act;

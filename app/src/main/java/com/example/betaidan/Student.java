@@ -1,6 +1,12 @@
 package com.example.betaidan;
 
 public class Student {
+  /**
+   * @author		Idan Cohen
+   * @version	    V1.0
+   * @since		7/4/2020
+   * Constructor for student class.
+   */
   private String name, SClass,Phone,uid,email;
 
 

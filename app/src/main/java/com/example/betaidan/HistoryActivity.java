@@ -33,7 +33,14 @@ import static com.example.betaidan.FBref.refLessonOffer;
 import static com.example.betaidan.FBref.refLocations;
 
 public class HistoryActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    String UID,uidteach, price, About, Experience, Date, Sbjct1, Name1, Phone1,name,phone,sclass,subject,price1,date1,price2;
+    /**
+     * @author		Idan Cohen
+     * @version	    V1.0
+     * @since		15/4/2020
+     * This activity is relevant for Teachers and Students, it will show up their orders based on what they are(Teacher or Student).
+     */
+
+    String UID,uidteach, price, About, Experience, Date, Sbjct1, Name1, Phone1,name,phone,sclass,subject,date1,price2;
     TextView tvnamee1, tvPhonee1, tvAbout, tvExperience, tvDate1, tvSubject1,tvDate10,
             tvname1,tvPhone1,tVsbj,tVprice1,tVsclass,tVprice;
     LessonOffer lo;
@@ -74,44 +81,6 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
                 .equalTo(uidteach);
         query1.addValueEventListener(VEL2);
 
-
-
-
-
-
-        /*{
-            locationListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    offer.clear();
-                    locationObjects2.clear();
-                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        String firstAddress = (String) data.getKey();
-
-                        LocationObject LocationObject = data.getValue(LocationObject.class);
-                        if(!LocationObject.isAct()) {
-                            locationObjects2.add(LocationObject);
-                            String date = LocationObject.getDate();
-                            String Subject = LocationObject.getSubject();
-                            offer.add("Subject: " + Subject + "Date: " + date);
-                        }
-                    }
-
-                    adp = new ArrayAdapter<String>(HistoryActivity.this,
-                            R.layout.support_simple_spinner_dropdown_item, offer);
-                    LV1.setAdapter(adp);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.w("TeacherActivity", "Failed to read value", databaseError.toException());
-
-                }
-
-            };
-            refLocations.addValueEventListener(locationListener);
-
-        }*/
 
     }
 
