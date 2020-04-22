@@ -45,7 +45,7 @@ public class LoginTeacher extends AppCompatActivity {
   boolean yes = false;
   String name, phone, email, password, uid,Experience,About;
   Teacher teacher;
-  Boolean stayConnect, registered, firstrun;
+  Boolean stayConnect, registered;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

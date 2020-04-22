@@ -5,11 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,21 +21,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import static com.example.betaidan.FBref.refAuth;
 import static com.example.betaidan.FBref.refLessonOffer;
@@ -67,7 +55,6 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
     Intent intent;
     ProgressDialog pd;
     LocationObject lo;
-    FusedLocationProviderClient fusedLocationProviderClient;
     ArrayList<String> offer = new ArrayList<>();
     ArrayList<LocationObject> locationObjects2 = new ArrayList<>();
     ArrayAdapter<String> adp;
@@ -87,11 +74,9 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
             FirebaseUser firebaseUser = refAuth.getCurrentUser();
 
 
-        //  FirebaseUser firebaseUser = refAuth.getCurrentUser();
         refTeacher.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot ds) {
-                //  UID =  (String) data.getKey();
                 teacher = ds.getValue(Teacher.class);
                 name1 = teacher.getName();
                 phone1 = teacher.getPhone();
@@ -113,6 +98,11 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
     }
 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        /**
+         * Respond to the order that has been clicked.
+         * <p>
+         * @param parent,view,position,id
+         */
         lb = locationObjects2.get(position);
         uid = lb.getUid();
         count = lb.getCount();
@@ -122,10 +112,6 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
         sclass = lb.getSClass();
         subject = lb.getSubject();
         start();
-    /*    if (trigger) {
-            final ProgressDialog pd = ProgressDialog.show(this, "Awaiting student acceptment..", "Waiting...", true);
-        }
-     */
 
     }
 
@@ -140,7 +126,6 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
                 locationObjects2.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     String firstAddress = (String) data.getKey();
-
                     LocationObject LocationObject = data.getValue(LocationObject.class);
                     if(LocationObject.isAct()) {
                         locationObjects2.add(LocationObject);
@@ -170,30 +155,14 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
     DialogInterface.OnClickListener myclick = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
+            /**
+             * Respond to Price offer acceptment or decline
+             * <p>
+             * @param dialog,which
+             */
             if (which == DialogInterface.BUTTON_POSITIVE) {
                 price = eTprice.getText().toString();
                 price = price + "₪";
-               /* DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference();
-                mDatabaseRef.child("LessonOffer").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            count = dataSnapshot.getChildrenCount();
-                            count = count + 1;
-                            LessonOffer lo = new LessonOffer(name1, phone1, date, price, subject, uid, About, Experience, true, count);
-                            refLessonOffer.child("" + count).setValue(lo);
-
-                        } else {
-                            count = 1;
-                            LessonOffer lo = new LessonOffer(name1, phone1, date, price, subject, uid, About, Experience, true, count);
-                            refLessonOffer.child("" + count).setValue(lo);
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
-                */
                 LessonOffer lo = new LessonOffer(name1, phone1, date, price, subject, uid, About, Experience, true, count,uidteach);
                 refLessonOffer.child("" + count).setValue(lo);
                 Toast.makeText(TeacherActivity.this, "Succeed", Toast.LENGTH_SHORT).show();
@@ -210,6 +179,10 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
     @SuppressLint("CutPasteId")
 
     public void start() {
+        /**
+         * AlertDialog for the student's Information.
+         * <p>
+         */
 
         studentdial = (LinearLayout) getLayoutInflater().inflate(R.layout.studentdial, null);
 
@@ -236,41 +209,11 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
 
     }
 
-    private void getLocation() {
-        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-                // Intiialize location
-                Location location = task.getResult();
-                if (location != null) {
-                    //Intiialize geoCoder
-                    Geocoder geocoder = new Geocoder(TeacherActivity.this,
-                            Locale.getDefault());
-                    // Intiialize address list
-                    try {
-                        List<Address> addresses = geocoder.getFromLocation(
-                                location.getLatitude(), location.getLongitude(), 1
-                        );
-                        //set address
-                        tv5.setText(Html.fromHtml(
-                                "<font color =' #6200EE'><b>Address:</b><br></fonnt>"
-                                        + addresses.get(0).getAddressLine(0))
-                        );
-
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-            }
-        });
-        address = tv5.getText().toString();
-        Toast.makeText(TeacherActivity.this, address, Toast.LENGTH_LONG).show();
-    }
-
     public void studentconfirm() {
+        /**
+         * Wait for the student to confirm or decline the offer
+         * <p>
+         */
         pd = ProgressDialog.show(this, "Awaiting student acceptment", "Waiting...", true);
         Query query = refLocations
                 .orderByChild("count").equalTo(count);
@@ -280,6 +223,11 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
     com.google.firebase.database.ValueEventListener VEL = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dS) {
+            /**
+             *  Listener for if student confirms the order or declining.
+             * <p>
+             * @param dS
+             */
             if (dS.exists()) {
                 for (DataSnapshot data : dS.getChildren()) {
                     lo = data.getValue(LocationObject.class);
@@ -309,11 +257,21 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
 
     };
     public boolean onCreateOptionsMenu(Menu menu) {
+        /**
+         * Show menu options
+         * <p>
+         * @param menu
+         */
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
+        /**
+         * Respond to the menu item selected
+         * <p>
+         * @param item
+         */
         String st = item.getTitle().toString();
         if (st.equals("Orders")) {
             intent = new Intent(TeacherActivity.this, TeacherActivity.class);

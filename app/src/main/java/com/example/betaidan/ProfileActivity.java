@@ -87,6 +87,11 @@ public class ProfileActivity extends AppCompatActivity {
   com.google.firebase.database.ValueEventListener VEL = new ValueEventListener() {
     @Override
     public void onDataChange(@NonNull DataSnapshot dS) {
+      /**
+       * Listener for if student is authenticated with the app
+       * <p>
+       * @param dS
+       */
       if (dS.exists()) {
         for(DataSnapshot data : dS.getChildren()) {
           student = data.getValue(Student.class);
@@ -106,6 +111,11 @@ public class ProfileActivity extends AppCompatActivity {
   com.google.firebase.database.ValueEventListener VEL2 = new ValueEventListener() {
     @Override
     public void onDataChange(@NonNull DataSnapshot dS) {
+      /**
+       * Listener for if teacher is authenticated with the app
+       * <p>
+       * @param dS
+       */
       if (dS.exists()) {
         for(DataSnapshot data : dS.getChildren()) {
           teacher = data.getValue(Teacher.class);
@@ -206,6 +216,10 @@ public class ProfileActivity extends AppCompatActivity {
   }
 
   private void studentprof() {
+    /**
+     * Shows the appropriate items for the student's profile.
+     * <p>
+     */
 
     classview.setVisibility(View.VISIBLE);
 
@@ -216,6 +230,10 @@ public class ProfileActivity extends AppCompatActivity {
   }
 
   private void teacherprof() {
+    /**
+     * Shows the appropriate items for the teacher's profile.
+     * <p>
+     */
 
     aboutview.setVisibility(View.VISIBLE);
     expview.setVisibility(View.VISIBLE);

@@ -1,11 +1,5 @@
 package com.example.betaidan;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -17,29 +11,23 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.ResultReceiver;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -52,7 +40,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -60,7 +47,6 @@ import java.util.Locale;
 import static com.example.betaidan.FBref.refAuth;
 import static com.example.betaidan.FBref.refLessonOffer;
 import static com.example.betaidan.FBref.refLocations;
-import static com.example.betaidan.FBref.refTeacher;
 import static com.example.betaidan.FBref.refstudent;
 
 public class StudentActivity extends AppCompatActivity{
@@ -75,14 +61,12 @@ public class StudentActivity extends AppCompatActivity{
   Button btLocation,DateBtn;
   int status;
   TextView tv1,tv2,tv3,tv4,tv5,TVD,tvnamee1,tvPhonee1,tvAbout,tvExperience,tvDate1,tvSubject1,tVprice;
-  String uid="sfns",subject="dmfsf", name, phone, sclass,price,About,Experience,Date,Sbjct1,Name1,Phone1,uidteach,price2;
+  String subject="dmfsf", name, phone, sclass,price,About,Experience,Date,Sbjct1,Name1,Phone1,uidteach,price2;
   EditText targetSubject;
   LinearLayout priceofferdial;
   String test="try",eventdate;
   Student student;
   LessonOffer lo;
-  Teacher yes;
-  Boolean aBoolean=true;
   ProgressDialog pd;
   Intent intent;
   LocationObject locationObject1;
@@ -104,11 +88,9 @@ public class StudentActivity extends AppCompatActivity{
 
 
 
-    //  FirebaseUser firebaseUser = refAuth.getCurrentUser();
     refstudent.child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
       public void onDataChange(@NonNull DataSnapshot ds) {
-        //  UID =  (String) data.getKey();
         student = ds.getValue(Student.class);
         name = student.getName();
         phone = student.getPhone();
@@ -123,13 +105,10 @@ public class StudentActivity extends AppCompatActivity{
         Log.w("Failed", "Failed to read value", databaseError.toException());
       }
     });
-    // refstudent.addValueEventListener(uploadlitner);
 
 
 
 
-
-    //Assign variable
     targetSubject=(EditText)findViewById(R.id.targetSubject);
     DateBtn = (Button) findViewById(R.id.DateBtn);
     TVD = (TextView) findViewById(R.id.textView);
@@ -226,7 +205,7 @@ public class StudentActivity extends AppCompatActivity{
       @Override
       public void onClick(View view) {
         /**
-         * Opens up the calendar for the user
+         * Opens up the Calendar for the user
          * <p>
          * @param view Button on click operate the action
          */
@@ -270,6 +249,12 @@ public class StudentActivity extends AppCompatActivity{
   com.google.firebase.database.ValueEventListener VEL = new ValueEventListener() {
     @Override
     public void onDataChange(@NonNull DataSnapshot dS) {
+        /**
+         * After teacher offering price it will come here.
+         * <p>
+         *
+         * @param DataSnapshot dS
+         */
       if (dS.exists()) {
         for(DataSnapshot data : dS.getChildren()) {
           lo  = data.getValue(LessonOffer.class);
@@ -412,10 +397,20 @@ public class StudentActivity extends AppCompatActivity{
   }
 
   public boolean onCreateOptionsMenu(Menu menu){
+      /**
+       * Show menu options
+       * <p>
+       * @param menu
+       */
     getMenuInflater().inflate(R.menu.main,menu);
     return true;
   }
   public boolean onOptionsItemSelected(MenuItem item){
+      /**
+       * Respond to the menu item selected
+       * <p>
+       * @param item
+       */
     String st = item.getTitle().toString();
     if(st.equals("Order History")) {
       intent = new Intent(StudentActivity.this, HistoryActivity.class);

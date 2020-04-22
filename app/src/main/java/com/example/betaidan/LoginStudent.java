@@ -1,8 +1,5 @@
 package com.example.betaidan;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,14 +10,15 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,7 +27,6 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 
 import static com.example.betaidan.FBref.refAuth;
-
 import static com.example.betaidan.FBref.refstudent;
 
 public class LoginStudent extends AppCompatActivity {
@@ -46,9 +43,9 @@ public class LoginStudent extends AppCompatActivity {
   CheckBox cBstayconnect;
   Button btn;
   Spinner spinner;
-  String name, phone, email, password, uid, Class, typecar;
+  String name, phone, email, password, uid, Class;
   Student student;
-  Boolean stayConnect, registered, firstrun;
+  Boolean stayConnect, registered;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +60,7 @@ public class LoginStudent extends AppCompatActivity {
     cBstayconnect=(CheckBox)findViewById(R.id.cBstayconnect);
     tVregister=(TextView) findViewById(R.id.tVregister);
     btn=(Button)findViewById(R.id.btn);
-    //   spinner = findViewById(R.id.spinner1);
-     /*   ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.numbers, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-*/      stayConnect=false;
+    stayConnect=false;
     registered=true;
 
     regoption();
@@ -114,7 +105,6 @@ public class LoginStudent extends AppCompatActivity {
         eTname.setVisibility(View.VISIBLE);
         eTphone.setVisibility(View.VISIBLE);
         eTclass.setVisibility(View.VISIBLE);
-        //    spinner.setVisibility(View.VISIBLE);
         btn.setText("Register");
         registered=false;
         logoption();
@@ -139,8 +129,6 @@ public class LoginStudent extends AppCompatActivity {
         eTname.setVisibility(View.INVISIBLE);
         eTphone.setVisibility(View.INVISIBLE);
         eTclass.setVisibility(View.INVISIBLE);
-        // spinner.setVisibility(View.INVISIBLE);
-
         btn.setText("Login");
         registered=true;
         regoption();

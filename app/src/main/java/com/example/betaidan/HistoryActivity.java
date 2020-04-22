@@ -1,13 +1,8 @@
 package com.example.betaidan;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,8 +22,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
-import javax.security.auth.Subject;
 
 import static com.example.betaidan.FBref.refAuth;
 import static com.example.betaidan.FBref.refLessonOffer;
@@ -37,21 +32,20 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
      * @author		Idan Cohen
      * @version	    V1.0
      * @since		15/4/2020
-     * This activity is relevant for Teachers and Students, it will show up their orders based on what they are(Teacher or Student).
+     * This activity is relevant for Teachers and Students,
+     * it will show up their orders based on what they are(Teacher or Student).
      */
 
     String UID,uidteach, price, About, Experience, Date, Sbjct1, Name1, Phone1,name,phone,sclass,subject,date1,price2;
     TextView tvnamee1, tvPhonee1, tvAbout, tvExperience, tvDate1, tvSubject1,tvDate10,
             tvname1,tvPhone1,tVsbj,tVprice1,tVsclass,tVprice;
     LessonOffer lo;
-    LocationObject Lo1,locationOb;
+    LocationObject locationOb;
     Boolean type;
     LinearLayout OfferDial,odial;
     Intent intent;
     AlertDialog.Builder adb,add;
     ArrayList<String> details = new ArrayList<>();
-    ArrayList<String> UidList = new ArrayList<>();
-
     ArrayList<LessonOffer> Detail = new ArrayList<>();
     ArrayList<LocationObject> lob = new ArrayList<>();
     ArrayAdapter<String> adp;
@@ -61,7 +55,6 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
-        ValueEventListener locationListener;
         LV1 = (ListView) findViewById(R.id.LV1);
         LV1.setOnItemClickListener(HistoryActivity.this);
         LV1.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -87,6 +80,11 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
     com.google.firebase.database.ValueEventListener VEL = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dS) {
+            /**
+             * Listener for if student is authenticated with the app
+             * <p>
+             * @param dS
+             */
             if (dS.exists()) {
                 for (DataSnapshot data : dS.getChildren()) {
                     lo = data.getValue(LessonOffer.class);
@@ -115,6 +113,11 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
     com.google.firebase.database.ValueEventListener VEL2 = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dS) {
+            /**
+             * Listener for if teacher is authenticated with the app
+             * <p>
+             * @param dS
+             */
             if (dS.exists()) {
                 for (DataSnapshot data : dS.getChildren()) {
                     locationOb = data.getValue(LocationObject.class);
@@ -142,11 +145,21 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
 
 
     public boolean onCreateOptionsMenu (Menu menu){
+        /**
+         * Show menu options
+         * <p>
+         * @param menu
+         */
             getMenuInflater().inflate(R.menu.main, menu);
             return true;
         }
 
         public boolean onOptionsItemSelected (MenuItem item){
+            /**
+             * Respond to the menu item selected
+             * <p>
+             * @param item
+             */
             String st = item.getTitle().toString();
             if (st.equals("Orders")&&type) {
                 intent = new Intent(HistoryActivity.this, TeacherActivity.class);

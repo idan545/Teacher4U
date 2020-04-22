@@ -28,6 +28,11 @@ public class EntranceActivity extends AppCompatActivity {
     teacher.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        /**
+         * Respond to teacher button
+         * <p>
+         * @param view
+         */
         t = new Intent(EntranceActivity.this, LoginTeacher.class);
         startActivity(t);
       }
@@ -35,6 +40,11 @@ public class EntranceActivity extends AppCompatActivity {
     student.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        /**
+         * Respond to student button
+         * <p>
+         * @param view
+         */
         t = new Intent(EntranceActivity.this, LoginStudent.class);
         startActivity(t);
       }
