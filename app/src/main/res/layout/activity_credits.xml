@@ -7,113 +7,113 @@
     android:orientation="horizontal"
     tools:context=".CreditsActivity">
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+  <Space
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1" />
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:orientation="vertical">
+  <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="4"
+      android:orientation="vertical">
 
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.2" />
-
-
-        <TextView
-            android:id="@+id/tVtitle"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:fontFamily="sans-serif-smallcaps"
-            android:gravity="center"
-            android:text="Teacher4U"
-            android:textAllCaps="false"
-            android:textColor="#7D8CE1"
-            android:textSize="36sp"
-            android:textStyle="bold|italic" />
-
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:gravity="center"
-            android:text="Credits:"
-            android:textAllCaps="true"
-            android:textColor="#DF2A4895"
-            android:textSize="24sp"
-            android:textStyle="bold|italic" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Teacher4U is an High School final project, Teacher4U was made and designed to coordinate private lessons between teachers and students."
-            android:textAllCaps="false"
-            android:textColor="#131F61"
-            android:textSize="18sp"
-            android:textStyle="bold|italic" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.1" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Author: Idan Cohen"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.1" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Instructors: Albert Levy, Itzik Ben Shitrit"
-            android:textColor="#CC0303"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.1" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Use this app in fun! if you liked please recommend this app to your friends who might need this."
-            android:textAllCaps="false"
-            android:textColor="#F44336"
-            android:textSize="18sp"
-            android:textStyle="bold|italic" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5" />
-
-    </LinearLayout>
 
     <Space
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2" />
+
+
+    <TextView
+        android:id="@+id/tVtitle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
+        android:text="Teacher4U"
+        android:textAllCaps="false"
+        android:textColor="#7D8CE1"
+        android:textSize="36sp"
+        android:textStyle="bold|italic" />
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:text="Credits:"
+        android:textAllCaps="true"
+        android:textColor="#DF2A4895"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Teacher4U is an High School final project, Teacher4U was made and designed to coordinate private lessons between teachers and students."
+        android:textAllCaps="false"
+        android:textColor="#131F61"
+        android:textSize="18sp"
+        android:textStyle="bold|italic" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Author: Idan Cohen"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Instructors: Albert Levy, Itzik Ben Shitrit"
+        android:textColor="#CC0303"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Use this app in fun! if you liked please recommend this app to your friends who might need this."
+        android:textAllCaps="false"
+        android:textColor="#F44336"
+        android:textSize="18sp"
+        android:textStyle="bold|italic" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5" />
+
+  </LinearLayout>
+
+  <Space
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1" />
 
 </LinearLayout>

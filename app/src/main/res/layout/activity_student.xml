@@ -21,7 +21,7 @@
       style="@style/Widget.AppCompat.Button.Colored"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Click to add your location" />
+      android:text="Click twice to add your location" />
 
   <Button
       android:id="@+id/DateBtn"
