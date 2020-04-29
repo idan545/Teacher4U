@@ -186,6 +186,11 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        /**
+         * Will fetch the data based on what the user is and will start the AD.
+         * <p>
+         * @param parent,view,position,id
+         */
         if(!type) {
             if (!Detail.get(position).isAct()) {
                 price = Detail.get(position).getPrice();
@@ -213,6 +218,10 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
     }
 
     private void adbltc() {
+        /**
+         * Open up AlertDialog for Teacher
+         * <p>
+         */
         odial = (LinearLayout) getLayoutInflater().inflate(R.layout.historydial, null);
 
         tvname1 = (TextView) odial.findViewById(R.id.tvname1);
@@ -239,6 +248,10 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
 
 
     public void adblv(){
+        /**
+         * Open up AlertDialog for Student
+         * <p>
+         */
         OfferDial = (LinearLayout) getLayoutInflater().inflate(R.layout.priceofferdial, null);
 
         tvnamee1 = (TextView) OfferDial.findViewById(R.id.tvnamee1);

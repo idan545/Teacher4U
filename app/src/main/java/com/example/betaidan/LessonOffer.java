@@ -12,7 +12,8 @@ public class LessonOffer {
     long count;
 
     public LessonOffer(){}
-    public LessonOffer(String Name, String Phone, String Date, String Price, String Subject, String uid,String About,String Experience,Boolean Act,Long count,String uidteach) {
+    public LessonOffer(String Name, String Phone, String Date, String Price, String Subject, String uid,String About,
+                       String Experience,Boolean Act,Long count,String uidteach) {
         this.Name = Name;
         this.Phone = Phone;
         this.Date = Date;

@@ -44,9 +44,8 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
      */
 
     ListView lv;
-    TextView tvname, tvPhone, tv5, tvSClass, tvdate, tvSubject;
+    TextView tvname, tvPhone, tvSClass, tvdate, tvSubject;
     EditText eTprice;
-    String address;
     Teacher teacher = new Teacher();
     String name, phone, uid, About, Experience, date, price, subject, sclass, name1, phone1,uidteach;
     AlertDialog.Builder adb;
@@ -125,7 +124,6 @@ public class TeacherActivity extends AppCompatActivity implements AdapterView.On
                 offer.clear();
                 locationObjects2.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    String firstAddress = (String) data.getKey();
                     LocationObject LocationObject = data.getValue(LocationObject.class);
                     if(LocationObject.isAct()) {
                         locationObjects2.add(LocationObject);

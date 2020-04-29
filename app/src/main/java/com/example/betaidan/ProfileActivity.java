@@ -54,7 +54,6 @@ public class ProfileActivity extends AppCompatActivity {
   TextView nameview,phoneview,classview,aboutview,expview;
   ImageView iV;
   String UID,name,phone,sclass,about,exp,name1,phone1;
-  Intent intent;
   int Gallery=1;
   Student student;
   Teacher teacher;
