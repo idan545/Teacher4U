@@ -382,6 +382,7 @@ public class StudentActivity extends AppCompatActivity{
                   .orderByChild("count")
                   .equalTo(count);
           query.addValueEventListener(VEL);
+
         } else {
           count = 1;
           locationObject1 = new LocationObject(test, subject, eventdate, UID, name, phone, sclass, status, true, count,"","");
@@ -394,7 +395,7 @@ public class StudentActivity extends AppCompatActivity{
           pd.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-              pd.dismiss();//dismiss dialog
+              pd.dismiss();
             }
           });
           pd.show();
