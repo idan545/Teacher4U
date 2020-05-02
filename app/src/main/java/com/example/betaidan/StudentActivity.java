@@ -217,30 +217,23 @@ public class StudentActivity extends AppCompatActivity{
 
         dpd = new DatePickerDialog(StudentActivity.this, new DatePickerDialog.OnDateSetListener() {
           @Override
-          public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+          public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             /**
              * Let's the student select the date that they want the private lesson will be at.
              * <p>
              *
              * @param	DatePicker view, int year, int Month, int dayOfMonth The date will be saved in those parameters.
              */
-
-            Toast.makeText(StudentActivity.this, "" + dayOfMonth + "/" + (month + 1) + "/" + year, Toast.LENGTH_SHORT).show();
-            if (month<10) {
-              if (dayOfMonth<10) {
-                eventdate="" + year + "_0" + (month+1) + "_0" + dayOfMonth;
-              } else {
-                eventdate="" + year + "_0" + (month+1) + "_" + dayOfMonth;
-              }
-            } else if (dayOfMonth<10) {
-              eventdate="" + year + "_" + (month+1) + "_0" + dayOfMonth;
-            } else {
-              eventdate="" + year + "_" + (month+1) + "_" + dayOfMonth;
-            }
+             c.set(Calendar.YEAR, year);
+              c.set(Calendar.MONTH, monthOfYear);
+              c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+              eventdate=year+"/"+(monthOfYear+1)+"/"+dayOfMonth;
+              Toast.makeText(StudentActivity.this, dayOfMonth + "-" + (monthOfYear + 1) + "-" + year, Toast.LENGTH_LONG).show();
             TVD.setText(eventdate);
 
           }
         }, day, month, year);
+        dpd.getDatePicker().setMinDate(System.currentTimeMillis());
         dpd.show();
 
       }
@@ -373,7 +366,18 @@ public class StudentActivity extends AppCompatActivity{
           locationObject1 = new LocationObject(test, subject, eventdate, UID, name, phone, sclass, status, true, count,"","");
           refLocations.child("" + count).setValue(locationObject1);
           Toast.makeText(StudentActivity.this, locationObject1.getMyLocation(), Toast.LENGTH_SHORT).show();
-          pd = ProgressDialog.show(StudentActivity.this, "Search", "Searching...", true);
+          pd = new ProgressDialog(StudentActivity.this);
+          pd.setTitle("Search");
+          pd.setMessage("Searching..");
+          pd.setCancelable(false);
+          pd.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              refLocations.child("" + count).removeValue();
+              pd.dismiss();
+            }
+          });
+          pd.show();
           Query query = refLessonOffer
                   .orderByChild("count")
                   .equalTo(count);
@@ -383,7 +387,17 @@ public class StudentActivity extends AppCompatActivity{
           locationObject1 = new LocationObject(test, subject, eventdate, UID, name, phone, sclass, status, true, count,"","");
           refLocations.child("" + count).setValue(locationObject1);
           Toast.makeText(StudentActivity.this, locationObject1.getMyLocation(), Toast.LENGTH_SHORT).show();
-          pd = ProgressDialog.show(StudentActivity.this, "Search", "Searching...", true);
+          pd = new ProgressDialog(StudentActivity.this);
+            pd.setTitle("Search");
+            pd.setMessage("Searching..");
+          pd.setCancelable(false);
+          pd.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              pd.dismiss();//dismiss dialog
+            }
+          });
+          pd.show();
           Query query = refLessonOffer
                   .orderByChild("count")
                   .equalTo(count);
